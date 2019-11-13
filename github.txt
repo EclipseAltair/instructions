@@ -6,7 +6,6 @@ git commit -m "commit"							# фиксация изменений
 git remote add origin https://github.com/EclipseAltair/project.git	# удаленное подключение
 git push -u origin master						# загрузка в master
 
-
 git clone https://github.com/EclipseAltair/project.git	# клонирование репозитория
 VCS -> Checkout from Version Control -> Git		# клонирование репозитория
 
