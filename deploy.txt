@@ -1,0 +1,240 @@
+UBUNTU 18.04
+
+
+-Измениение journald.conf:
+nano /etc/systemd/journald.conf
+
+-В nano заменить:
+SystemMaxUse=1M
+
+-Подключение к серверу через ssh:
+ssh root@SERVER_IP_ADDRESS
+
+-Создание пользователя:
+adduser username
+
+-Добавление пользователя в группу sudo:
+usermod -aG sudo username
+
+-Настройка firewall:
+#apt-get update
+#apt-get install ufw
+ufw app list
+ufw allow OpenSSH	#разрешить OpenSSH
+ufw enable		#включить
+ufw status		#статус
+
+-Генерация ключа на локальной машине, с которой будет осуществляться доступ к VDS:
+ssh-keygen
+
+-Добавление его на VDS сервер:
+ssh-copy-id username@SERVER_IP_ADDRESS
+
+-Проверка доступа к нашему серверу под новым пользователем с помощью ключей шифрования:
+ssh username@SERVER_IP_ADDRESS
+
+-Запрет доступа по паролю и доступ непосредственно самого root пользователя:
+sudo nano /etc/ssh/sshd_config
+
+-В nano заменить:
+PermitRootLogin no
+PasswordAuthentication no
+
+-Далее перезапускаем службу SSH:
+sudo systemctl reload sshd
+
+-Установка зависимостей:
+#удалить apache2
+sudo apt-get update
+sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx git
+
+-Изменим пользователя и войдём как postgres:
+sudo -u postgres psql
+
+
+POSTGRESQL
+
+
+-Создание NAME базы данных (по settings.py):
+CREATE DATABASE myproject;
+
+-Создание USER базы данных по PASSWORD (по settings.py):
+CREATE USER myprojectuser WITH PASSWORD 'password';
+
+-Изменение настроек
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';
+
+-Передача новому пользователю права на доступ к этой базе данных:
+GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
+
+-Закрыть командную строку postgresql:
+\q
+
+
+VIRTUALENV
+
+
+-Устанавливаем virtualenv:
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install virtualenv
+
+-Создание каталога для приложения и переход в него:
+mkdir ~/myprojectdir
+cd ~/myprojectdir
+
+-Создание виртуального окружения:
+virtualenv myprojectenv
+
+-Запуск виртуального окружения: 
+source myprojectenv/bin/activate
+
+
+GIT
+
+
+-Загрузка проекта с github:
+git init .
+git remote add origin https://github.com/User/project.git
+git pull origin master
+
+
+DJANGO
+
+
+-Установка зависимостей:
+pip install -r requirements.txt
+pip install gunicorn
+
+-Перенос БД:
+python3 manage.py makemigrations [apps...]
+python3 manage.py migrate
+python3 manage.py dbshell
+delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
+\q
+#сначала на локале "py manage.py dumpdata > dump.json"
+python3 manage.py loaddata dump.json
+
+-----------------------------------------
+-ОШИБКА "DETAIL: Key (app_label, model)=(main, price) already exists.":
+python3 manage.py dbshell
+delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
+
+-ОШИБКА "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser уже выполнен на сервере:
+python3 manage.py dbshell
+TRUNCATE django_content_type CASCADE;
+-----------------------------------------
+
+-Сбор статических файлов:
+python3 manage.py collectstatic
+
+-Разблокировка 8000 порта:
+sudo ufw allow 8000
+
+-Тест сервера:
+python3 manage.py runserver 0.0.0.0:8000
+
+-Запуск gunicorn:
+cd ~/myproject
+gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application
+
+-Разблокировка 80 порта:
+sudo ufw allow 80
+
+
+NGINX
+
+
+-Отредактируем конфигурационный файл Nginx:
+sudo nano /etc/nginx/sites-available/default
+
+-В nano всё удаляем вставляем:
+server {
+    listen 80;
+    server_name 255.255.255.255; # здесь прописать или IP-адрес или доменное имя сервера
+    #access_log  /var/log/nginx/example.log;
+    #error_log   /var/log/nginx/error.log;
+ 
+    location /static/ {
+        root /home/user/myproject/static;
+        expires 30d;
+    }
+ 
+    location /media {
+        root /home/user/myproject/static;
+        expires 30d;
+    }
+ 
+    location / {
+        proxy_pass http://127.0.0.1:8000; 
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+-Права для записи в media:
+sudo chmod 777 /home/user/myproject/static/media
+
+-Перезапуск Nginx:
+sudo service nginx restart
+
+-Запуск gunicorn:
+gunicorn myproject.wsgi:application
+
+-Отключение виртульаное окружение:
+deactivate
+
+
+SUPERVISOR
+
+
+-Установка supervisor:
+sudo apt-get install supervisor
+
+-Создание конфигурационного файла:
+cd /home/user/myproject/myproject 	# каталог с settings.py
+touch gunicorn.conf.py
+nano gunicorn.conf.py
+
+-В nano пишем:
+bind = '127.0.0.1:8000'
+workers = 3		# workers=Ncpu+1
+user = "nobody"
+
+-(от root) Создание конфигурацию самого supervisor:
+cd /etc/supervisor/conf.d/
+touch myproject.conf
+nano myproject.conf
+
+-(от root) В nano пишем:
+[program:myproject]
+command=/home/user/myproject/myprojectenv/bin/gunicorn myproject.wsgi:application -c /home/user/myproject/myproject/gunicorn.conf.py
+directory=/home/user/myproject
+user=nobody
+autorestart=true
+redirect_stderr=true
+
+-Принудительное добавление supervisor в автозагрузку:
+sudo update-rc.d supervisor enable
+
+-Запуск supervisor:
+sudo service supervisor start
+
+-Команды для supervisor:
+supervisorctl reread	# дает супервизору инфу, что поменялся конфиг
+supervisorctl update	# перезапускаем только те воркеры, для которых поменялась конфигурация
+supervisorctl status myproject
+supervisor restart myproject	# если изменили код воркеров
+
+-Остановка машины в консоли:
+shutdown -r now
+
+-Перезапуск после измнений в проекте:
+sudo killall gunicorn
+
+______________
+-Чистка кэша
+apt-get install packagekit-tools
+pkcon refresh force -c -1
