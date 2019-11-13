@@ -11,7 +11,7 @@ SystemMaxUse=1M
 ssh root@SERVER_IP_ADDRESS
 
 -Создание пользователя:
-adduser username
+adduser username 
 
 -Добавление пользователя в группу sudo:
 usermod -aG sudo username
