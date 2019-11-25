@@ -1,0 +1,18 @@
+-Установка software-properties-common:
+sudo apt install software-properties-common
+(sudo apt install --reinstall software-properties-common)
+
+-Установка PPA:
+sudo add-apt-repository ppa:certbot/certbot
+
+-Обновление:
+sudo apt update
+
+-Установка certbot:
+sudo apt install certbot
+
+-Настройки для nginx:
+sudo apt install python-certbot-nginx
+
+-Ручная установка:
+sudo certbot run --nginx
