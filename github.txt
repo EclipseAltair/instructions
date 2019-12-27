@@ -40,6 +40,6 @@ gir merge dev						# слияние ветки dev в master
 git branch -D dev					# удаление ветки dev
 VCS -> Git -> Resolve Conflicts...			# разрешение конфликтов слияния
 
-git config --global user.name "Altair"
-git config --global user.email "eclipsealtair@gmail.com"
+git config --global user.name "EclipseAltair"
+git config --global user.email "eclipsealtair@yandex.ru"
 git config --list
