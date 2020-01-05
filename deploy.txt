@@ -146,10 +146,10 @@ sudo ufw allow 80
 NGINX
 
 
--Отредактируем конфигурационный файл Nginx:
+-Редактирование конфигурационного файла Nginx:
 sudo nano /etc/nginx/sites-available/default
 
--В nano всё удаляем вставляем:
+-В nano всё удалить и вставить:
 server {
     listen 80;
     server_name 255.255.255.255; # здесь прописать или IP-адрес или доменное имя сервера

@@ -36,7 +36,7 @@ git branch dev 						# создание ветки dev
 git checkout dev					# переход в ветку dev 
 git checkout -b dev					# создание и переход в ветку dev
 
-gir merge dev						# слияние ветки dev в master
+git merge dev						# слияние ветки dev в master
 git branch -D dev					# удаление ветки dev
 VCS -> Git -> Resolve Conflicts...			# разрешение конфликтов слияния
 

@@ -1,0 +1,56 @@
+HTTPS
+
+
+-Установка software-properties-common:
+sudo apt install software-properties-common
+(sudo apt install --reinstall software-properties-common)
+
+-Установка PPA:
+sudo add-apt-repository ppa:certbot/certbot
+
+-Обновление:
+sudo apt update
+
+-Установка certbot:
+sudo apt install certbot
+
+-Настройки для nginx:
+sudo apt install python-certbot-nginx
+
+-Ручная установка:
+sudo certbot run --nginx
+
+
+HTTP/2
+
+
+-Редактирование конфигурационного файла Nginx:
+sudo nano /etc/nginx/sites-available/default
+
+-В nano вставить:
+server {
+    listen 443 ssl http2;
+    ...
+}
+
+
+GZIP
+
+
+-Редактирование конфигурационного файла Nginx:
+sudo nano /etc/nginx/nginx.conf
+
+-В nano вставить или раскомментировать:
+http {
+...
+##
+# Gzip Settings
+##
+gzip on;
+gzip_disable "msie6";
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+}
