@@ -40,6 +40,8 @@ git merge dev						# слияние ветки dev в master
 git branch -D dev					# удаление ветки dev
 VCS -> Git -> Resolve Conflicts...			# разрешение конфликтов слияния
 
-git config --global user.name "EclipseAltair"
-git config --global user.email "eclipsealtair@yandex.ru"
-git config --list
+git config --global user.name "user"			# установка пользователя в настройки
+git config --global user.email "user@mail.ru"		# установка почты в настройки
+git config --global core.autocrlf true			# конвертация в crlf (для Windows)
+git config --global core.autocrlf input			# конвертация в lf (для Linux)
+git config --list					# список настроек
