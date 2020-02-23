@@ -1,0 +1,46 @@
+DOCKER
+
+
+sudo groupadd docker					# создать группу докер
+groups							# посмотреть все группы
+sudo usermod -aG docker $(whoami)			# добавление пользователя в группу docker
+
+docker run -it ubuntu bash				# создать контейнер с убунту (i - интерактивный, t - terminal)
+docker run -h $(whoami) -it ubuntu bash			# создать контейнер с убунту (ubuntu - образ)(h- имя хоста)
+docker run --name Ubuntu -it ubuntu bash		# создать контейнер c NAMES - Ubuntu
+docker run -d bitnami/apache				# запуск контейнера с apache (d - демон(фон. режим))
+docker run -d -p 8000:8080 bitnami/apache		# запуск контейнера (p - порт, 8000: - порт на пк, :8080 - внутри контейнера)
+
+В новом терминале:
+docker ps						# все запущенные процессы docker
+docker ps -a						# все процессы docker (a - включая остановленные)
+
+docker start <NAMES>					# перезапуск контейнера
+docker stop <NAMES>					# остановка контейнера
+docker inspect <NAMES>					# инфо о контейнере
+docker diff <NAMES>					# список измененных файлов
+docker logs <NAMES>					# список событий внутри контейнера
+docker rm <NAMES>					# удалить контейнер
+docker ps -aq -f status=exited				# список всех остановленных контейнеров
+docker rm -v $(docker ps -aq -f status=exited)		# удалить все остановленные контейнеры
+docker images						# спиок образов
+
+docker commit <NAMES> <DockerID>/<Repository>		# создание образа из контейнера
+docker run <DockerID>/<Repository> cowsay "hi"		# запуск контейнера с приложением cowsay
+
+docker login						# подключиться к аккаунту
+docker push <DockerID>/<Repository>			# отправка образа в репозиторий
+
+docker build -t <DockerID>/<Repository>			# собрать Dockerfile (t - имя образа)
+
+
+DOCKER-COMPOSE
+
+
+docker-compose build					# собрать docker-compose
+docker-compose up					# запуск docker-compose и собрать если не собраны
+docker-compose up -d					# запуск docker-compose (d - демон(фон. режим))
+docker-compose ps					# посмотреть запущенные контейнеры
+docker-compose rm <service_name>			# удаление по имени сервиса в docker-compose.yaml
+
+docker run -v /data ubuntu 				# инициализация тома (v - volumes)
