@@ -1,33 +1,33 @@
 HTTPS
 
 
--Установка software-properties-common:
+-РЈСЃС‚Р°РЅРѕРІРєР° software-properties-common:
 sudo apt install software-properties-common
 (sudo apt install --reinstall software-properties-common)
 
--Установка PPA:
+-РЈСЃС‚Р°РЅРѕРІРєР° PPA:
 sudo add-apt-repository ppa:certbot/certbot
 
--Обновление:
+-РћР±РЅРѕРІР»РµРЅРёРµ:
 sudo apt update
 
--Установка certbot:
+-РЈСЃС‚Р°РЅРѕРІРєР° certbot:
 sudo apt install certbot
 
--Настройки для nginx:
+-РќР°СЃС‚СЂРѕР№РєРё РґР»СЏ nginx:
 sudo apt install python-certbot-nginx
 
--Ручная установка:
+-Р СѓС‡РЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР°:
 sudo certbot run --nginx
 
 
 HTTP/2
 
 
--Редактирование конфигурационного файла Nginx:
+-Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРіРѕ С„Р°Р№Р»Р° Nginx:
 sudo nano /etc/nginx/sites-available/default
 
--В nano вставить:
+-Р’ nano РІСЃС‚Р°РІРёС‚СЊ:
 server {
     listen 443 ssl http2;
     ...
@@ -37,10 +37,10 @@ server {
 GZIP
 
 
--Редактирование конфигурационного файла Nginx:
+-Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРіРѕ С„Р°Р№Р»Р° Nginx:
 sudo nano /etc/nginx/nginx.conf
 
--В nano вставить или раскомментировать:
+-Р’ nano РІСЃС‚Р°РІРёС‚СЊ РёР»Рё СЂР°СЃРєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ:
 http {
 ...
 ##

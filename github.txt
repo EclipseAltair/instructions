@@ -1,47 +1,47 @@
-VCS -> Import into Version Control -> Share Project on GitHub		# создание репозитория на github
+VCS -> Import into Version Control -> Share Project on GitHub		# СЃРѕР·РґР°РЅРёРµ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ РЅР° github
 
-git init								# инициализация
-git add .								# добавление всех файлов
-git commit -m "commit"							# фиксация изменений
-git remote add origin https://github.com/EclipseAltair/project.git	# удаленное подключение
-git push -u origin master						# загрузка в master
+git init								# РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
+git add .								# РґРѕР±Р°РІР»РµРЅРёРµ РІСЃРµС… С„Р°Р№Р»РѕРІ
+git commit -m "commit"							# С„РёРєСЃР°С†РёСЏ РёР·РјРµРЅРµРЅРёР№
+git remote add origin https://github.com/EclipseAltair/project.git	# СѓРґР°Р»РµРЅРЅРѕРµ РїРѕРґРєР»СЋС‡РµРЅРёРµ
+git push -u origin master						# Р·Р°РіСЂСѓР·РєР° РІ master
 
-git clone https://github.com/EclipseAltair/project.git	# клонирование репозитория
-VCS -> Checkout from Version Control -> Git		# клонирование репозитория
+git clone https://github.com/EclipseAltair/project.git	# РєР»РѕРЅРёСЂРѕРІР°РЅРёРµ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+VCS -> Checkout from Version Control -> Git		# РєР»РѕРЅРёСЂРѕРІР°РЅРёРµ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
 
-git checkout -- index.html				# отмена изменений в файле (ctrl+Z...)
-git checkout .						# отмена изменений во всех файлах (ctrl+Z...)
+git checkout -- index.html				# РѕС‚РјРµРЅР° РёР·РјРµРЅРµРЅРёР№ РІ С„Р°Р№Р»Рµ (ctrl+Z...)
+git checkout .						# РѕС‚РјРµРЅР° РёР·РјРµРЅРµРЅРёР№ РІРѕ РІСЃРµС… С„Р°Р№Р»Р°С… (ctrl+Z...)
 
-git add "file.txt" (ctrl+alt+A)				# добавление файла
-git add --all						# добавление всех файлов
-git reset index.html					# отмена добавления (add) файла
-git reset .						# отмена добавления (add) всех файлов
+git add "file.txt" (ctrl+alt+A)				# РґРѕР±Р°РІР»РµРЅРёРµ С„Р°Р№Р»Р°
+git add --all						# РґРѕР±Р°РІР»РµРЅРёРµ РІСЃРµС… С„Р°Р№Р»РѕРІ
+git reset index.html					# РѕС‚РјРµРЅР° РґРѕР±Р°РІР»РµРЅРёСЏ (add) С„Р°Р№Р»Р°
+git reset .						# РѕС‚РјРµРЅР° РґРѕР±Р°РІР»РµРЅРёСЏ (add) РІСЃРµС… С„Р°Р№Р»РѕРІ
 
-git commit -m "commit" (ctrl+K)				# фисация изменений
-git reset --soft HEAD^1					# возвращение на 1 коммит назад без отмены изменений в файле
-git reset --hard HEAD^1					# возвращение на 1 коммит назад с отменой измненений в файле
+git commit -m "commit" (ctrl+K)				# С„РёСЃР°С†РёСЏ РёР·РјРµРЅРµРЅРёР№
+git reset --soft HEAD^1					# РІРѕР·РІСЂР°С‰РµРЅРёРµ РЅР° 1 РєРѕРјРјРёС‚ РЅР°Р·Р°Рґ Р±РµР· РѕС‚РјРµРЅС‹ РёР·РјРµРЅРµРЅРёР№ РІ С„Р°Р№Р»Рµ
+git reset --hard HEAD^1					# РІРѕР·РІСЂР°С‰РµРЅРёРµ РЅР° 1 РєРѕРјРјРёС‚ РЅР°Р·Р°Рґ СЃ РѕС‚РјРµРЅРѕР№ РёР·РјРЅРµРЅРµРЅРёР№ РІ С„Р°Р№Р»Рµ
 
-git pull (ctrl+T)					# выгрузка с github
-git push						# загрузка на github
+git pull (ctrl+T)					# РІС‹РіСЂСѓР·РєР° СЃ github
+git push						# Р·Р°РіСЂСѓР·РєР° РЅР° github
 
-git status						# статус файлов в репозитории
-git log	-5						# 5 последних коммитов
-git log --oneline --graph --decorate --all		# удобный вывод всех коммитов
+git status						# СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»РѕРІ РІ СЂРµРїРѕР·РёС‚РѕСЂРёРё
+git log	-5						# 5 РїРѕСЃР»РµРґРЅРёС… РєРѕРјРјРёС‚РѕРІ
+git log --oneline --graph --decorate --all		# СѓРґРѕР±РЅС‹Р№ РІС‹РІРѕРґ РІСЃРµС… РєРѕРјРјРёС‚РѕРІ
 
-git rm --cached --ignore-unmatch index.html		# удаление index.html из репозитория
+git rm --cached --ignore-unmatch index.html		# СѓРґР°Р»РµРЅРёРµ index.html РёР· СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
 
-git branch -v						# последний коммит в ветке
-git branch -a						# список веток в проекте
-git branch dev 						# создание ветки dev
-git checkout dev					# переход в ветку dev 
-git checkout -b dev					# создание и переход в ветку dev
+git branch -v						# РїРѕСЃР»РµРґРЅРёР№ РєРѕРјРјРёС‚ РІ РІРµС‚РєРµ
+git branch -a						# СЃРїРёСЃРѕРє РІРµС‚РѕРє РІ РїСЂРѕРµРєС‚Рµ
+git branch dev 						# СЃРѕР·РґР°РЅРёРµ РІРµС‚РєРё dev
+git checkout dev					# РїРµСЂРµС…РѕРґ РІ РІРµС‚РєСѓ dev 
+git checkout -b dev					# СЃРѕР·РґР°РЅРёРµ Рё РїРµСЂРµС…РѕРґ РІ РІРµС‚РєСѓ dev
 
-git merge dev						# слияние ветки dev в master
-git branch -D dev					# удаление ветки dev
-VCS -> Git -> Resolve Conflicts...			# разрешение конфликтов слияния
+git merge dev						# СЃР»РёСЏРЅРёРµ РІРµС‚РєРё dev РІ master
+git branch -D dev					# СѓРґР°Р»РµРЅРёРµ РІРµС‚РєРё dev
+VCS -> Git -> Resolve Conflicts...			# СЂР°Р·СЂРµС€РµРЅРёРµ РєРѕРЅС„Р»РёРєС‚РѕРІ СЃР»РёСЏРЅРёСЏ
 
-git config --global user.name "user"			# установка пользователя в настройки
-git config --global user.email "user@mail.ru"		# установка почты в настройки
-git config --global core.autocrlf true			# конвертация в crlf (для Windows)
-git config --global core.autocrlf input			# конвертация в lf (для Linux)
-git config --list					# список настроек
+git config --global user.name "user"			# СѓСЃС‚Р°РЅРѕРІРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РЅР°СЃС‚СЂРѕР№РєРё
+git config --global user.email "user@mail.ru"		# СѓСЃС‚Р°РЅРѕРІРєР° РїРѕС‡С‚С‹ РІ РЅР°СЃС‚СЂРѕР№РєРё
+git config --global core.autocrlf true			# РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РІ crlf (РґР»СЏ Windows)
+git config --global core.autocrlf input			# РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РІ lf (РґР»СЏ Linux)
+git config --list					# СЃРїРёСЃРѕРє РЅР°СЃС‚СЂРѕРµРє

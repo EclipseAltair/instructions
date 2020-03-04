@@ -1,46 +1,46 @@
 DOCKER
 
 
-sudo groupadd docker					# создать группу докер
-groups							# посмотреть все группы
-sudo usermod -aG docker $(whoami)			# добавление пользователя в группу docker
+sudo groupadd docker					# СЃРѕР·РґР°С‚СЊ РіСЂСѓРїРїСѓ РґРѕРєРµСЂ
+groups							# РїРѕСЃРјРѕС‚СЂРµС‚СЊ РІСЃРµ РіСЂСѓРїРїС‹
+sudo usermod -aG docker $(whoami)			# РґРѕР±Р°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РіСЂСѓРїРїСѓ docker
 
-docker run -it ubuntu bash				# создать контейнер с убунту (i - интерактивный, t - terminal)
-docker run -h $(whoami) -it ubuntu bash			# создать контейнер с убунту (ubuntu - образ)(h- имя хоста)
-docker run --name Ubuntu -it ubuntu bash		# создать контейнер c NAMES - Ubuntu
-docker run -d bitnami/apache				# запуск контейнера с apache (d - демон(фон. режим))
-docker run -d -p 8000:8080 bitnami/apache		# запуск контейнера (p - порт, 8000: - порт на пк, :8080 - внутри контейнера)
+docker run -it ubuntu bash				# СЃРѕР·РґР°С‚СЊ РєРѕРЅС‚РµР№РЅРµСЂ СЃ СѓР±СѓРЅС‚Сѓ (i - РёРЅС‚РµСЂР°РєС‚РёРІРЅС‹Р№, t - terminal)
+docker run -h $(whoami) -it ubuntu bash			# СЃРѕР·РґР°С‚СЊ РєРѕРЅС‚РµР№РЅРµСЂ СЃ СѓР±СѓРЅС‚Сѓ (ubuntu - РѕР±СЂР°Р·)(h- РёРјСЏ С…РѕСЃС‚Р°)
+docker run --name Ubuntu -it ubuntu bash		# СЃРѕР·РґР°С‚СЊ РєРѕРЅС‚РµР№РЅРµСЂ c NAMES - Ubuntu
+docker run -d bitnami/apache				# Р·Р°РїСѓСЃРє РєРѕРЅС‚РµР№РЅРµСЂР° СЃ apache (d - РґРµРјРѕРЅ(С„РѕРЅ. СЂРµР¶РёРј))
+docker run -d -p 8000:8080 bitnami/apache		# Р·Р°РїСѓСЃРє РєРѕРЅС‚РµР№РЅРµСЂР° (p - РїРѕСЂС‚, 8000: - РїРѕСЂС‚ РЅР° РїРє, :8080 - РІРЅСѓС‚СЂРё РєРѕРЅС‚РµР№РЅРµСЂР°)
 
-В новом терминале:
-docker ps						# все запущенные процессы docker
-docker ps -a						# все процессы docker (a - включая остановленные)
+Р’ РЅРѕРІРѕРј С‚РµСЂРјРёРЅР°Р»Рµ:
+docker ps						# РІСЃРµ Р·Р°РїСѓС‰РµРЅРЅС‹Рµ РїСЂРѕС†РµСЃСЃС‹ docker
+docker ps -a						# РІСЃРµ РїСЂРѕС†РµСЃСЃС‹ docker (a - РІРєР»СЋС‡Р°СЏ РѕСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рµ)
 
-docker start <NAMES>					# перезапуск контейнера
-docker stop <NAMES>					# остановка контейнера
-docker inspect <NAMES>					# инфо о контейнере
-docker diff <NAMES>					# список измененных файлов
-docker logs <NAMES>					# список событий внутри контейнера
-docker rm <NAMES>					# удалить контейнер
-docker ps -aq -f status=exited				# список всех остановленных контейнеров
-docker rm -v $(docker ps -aq -f status=exited)		# удалить все остановленные контейнеры
-docker images						# спиок образов
+docker start <NAMES>					# РїРµСЂРµР·Р°РїСѓСЃРє РєРѕРЅС‚РµР№РЅРµСЂР°
+docker stop <NAMES>					# РѕСЃС‚Р°РЅРѕРІРєР° РєРѕРЅС‚РµР№РЅРµСЂР°
+docker inspect <NAMES>					# РёРЅС„Рѕ Рѕ РєРѕРЅС‚РµР№РЅРµСЂРµ
+docker diff <NAMES>					# СЃРїРёСЃРѕРє РёР·РјРµРЅРµРЅРЅС‹С… С„Р°Р№Р»РѕРІ
+docker logs <NAMES>					# СЃРїРёСЃРѕРє СЃРѕР±С‹С‚РёР№ РІРЅСѓС‚СЂРё РєРѕРЅС‚РµР№РЅРµСЂР°
+docker rm <NAMES>					# СѓРґР°Р»РёС‚СЊ РєРѕРЅС‚РµР№РЅРµСЂ
+docker ps -aq -f status=exited				# СЃРїРёСЃРѕРє РІСЃРµС… РѕСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
+docker rm -v $(docker ps -aq -f status=exited)		# СѓРґР°Р»РёС‚СЊ РІСЃРµ РѕСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рµ РєРѕРЅС‚РµР№РЅРµСЂС‹
+docker images						# СЃРїРёРѕРє РѕР±СЂР°Р·РѕРІ
 
-docker commit <NAMES> <DockerID>/<Repository>		# создание образа из контейнера
-docker run <DockerID>/<Repository> cowsay "hi"		# запуск контейнера с приложением cowsay
+docker commit <NAMES> <DockerID>/<Repository>		# СЃРѕР·РґР°РЅРёРµ РѕР±СЂР°Р·Р° РёР· РєРѕРЅС‚РµР№РЅРµСЂР°
+docker run <DockerID>/<Repository> cowsay "hi"		# Р·Р°РїСѓСЃРє РєРѕРЅС‚РµР№РЅРµСЂР° СЃ РїСЂРёР»РѕР¶РµРЅРёРµРј cowsay
 
-docker login						# подключиться к аккаунту
-docker push <DockerID>/<Repository>			# отправка образа в репозиторий
+docker login						# РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р°РєРєР°СѓРЅС‚Сѓ
+docker push <DockerID>/<Repository>			# РѕС‚РїСЂР°РІРєР° РѕР±СЂР°Р·Р° РІ СЂРµРїРѕР·РёС‚РѕСЂРёР№
 
-docker build -t <DockerID>/<Repository>			# собрать Dockerfile (t - имя образа)
+docker build -t <DockerID>/<Repository>			# СЃРѕР±СЂР°С‚СЊ Dockerfile (t - РёРјСЏ РѕР±СЂР°Р·Р°)
 
 
 DOCKER-COMPOSE
 
 
-docker-compose build					# собрать docker-compose
-docker-compose up					# запуск docker-compose и собрать если не собраны
-docker-compose up -d					# запуск docker-compose (d - демон(фон. режим))
-docker-compose ps					# посмотреть запущенные контейнеры
-docker-compose rm <service_name>			# удаление по имени сервиса в docker-compose.yaml
+docker-compose build					# СЃРѕР±СЂР°С‚СЊ docker-compose
+docker-compose up					# Р·Р°РїСѓСЃРє docker-compose Рё СЃРѕР±СЂР°С‚СЊ РµСЃР»Рё РЅРµ СЃРѕР±СЂР°РЅС‹
+docker-compose up -d					# Р·Р°РїСѓСЃРє docker-compose (d - РґРµРјРѕРЅ(С„РѕРЅ. СЂРµР¶РёРј))
+docker-compose ps					# РїРѕСЃРјРѕС‚СЂРµС‚СЊ Р·Р°РїСѓС‰РµРЅРЅС‹Рµ РєРѕРЅС‚РµР№РЅРµСЂС‹
+docker-compose rm <service_name>			# СѓРґР°Р»РµРЅРёРµ РїРѕ РёРјРµРЅРё СЃРµСЂРІРёСЃР° РІ docker-compose.yaml
 
-docker run -v /data ubuntu 				# инициализация тома (v - volumes)
+docker run -v /data ubuntu 				# РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚РѕРјР° (v - volumes)
