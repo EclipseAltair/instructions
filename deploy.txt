@@ -30,71 +30,71 @@ ssh-keygen
 -Добавление его на VDS сервер:
 ssh-copy-id username@SERVER_IP_ADDRESS
 
--Ïðîâåðêà äîñòóïà ê íàøåìó ñåðâåðó ïîä íîâûì ïîëüçîâàòåëåì ñ ïîìîùüþ êëþ÷åé øèôðîâàíèÿ:
+-Проверка доступа к нашему серверу под новым пользователем с помощью ключей шифрования:
 ssh username@SERVER_IP_ADDRESS
 
--Çàïðåò äîñòóïà ïî ïàðîëþ è äîñòóï íåïîñðåäñòâåííî ñàìîãî root ïîëüçîâàòåëÿ:
+-Запрет доступа по паролю и доступ непосредственно самого root пользователя:
 sudo nano /etc/ssh/sshd_config
 
--Â nano çàìåíèòü:
+-В nano заменить:
 PermitRootLogin no
 PasswordAuthentication no
 
--Äàëåå ïåðåçàïóñêàåì ñëóæáó SSH:
+-Далее перезапускаем службу SSH:
 sudo systemctl reload sshd
 
--Óñòàíîâêà çàâèñèìîñòåé:
+-Установка зависимостей:
 #óäàëèòü apache2
 sudo apt-get update
 sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx git
 
--Èçìåíèì ïîëüçîâàòåëÿ è âîéäžì êàê postgres:
+-Изменим пользователя и войдём как postgres:
 sudo -u postgres psql
 
 
 POSTGRESQL
 
 
--Ñîçäàíèå NAME áàçû äàííûõ (ïî settings.py):
+-Создание NAME базы данных (по settings.py):
 CREATE DATABASE myproject;
 
--Ñîçäàíèå USER áàçû äàííûõ ïî PASSWORD (ïî settings.py):
+-Создание USER базы данных по PASSWORD (по settings.py):
 CREATE USER myprojectuser WITH PASSWORD 'password';
 
--Èçìåíåíèå íàñòðîåê
+-Изменение настроек:
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
 ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
 ALTER ROLE myprojectuser SET timezone TO 'UTC';
 
--Ïåðåäà÷à íîâîìó ïîëüçîâàòåëþ ïðàâà íà äîñòóï ê ýòîé áàçå äàííûõ:
+-Передача новому пользователю права на доступ к этой базе данных:
 GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 
--Çàêðûòü êîìàíäíóþ ñòðîêó postgresql:
+-Закрыть командную строку postgresql:
 \q
 
 
 VIRTUALENV
 
 
--Óñòàíàâëèâàåì virtualenv:
+-Устанавливаем virtualenv:
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install virtualenv
 
--Ñîçäàíèå êàòàëîãà äëÿ ïðèëîæåíèÿ è ïåðåõîä â íåãî:
+-Создание каталога для приложения и переход в него:
 mkdir ~/myprojectdir
 cd ~/myprojectdir
 
--Ñîçäàíèå âèðòóàëüíîãî îêðóæåíèÿ:
+-Создание виртуального окружения:
 virtualenv myprojectenv
 
--Çàïóñê âèðòóàëüíîãî îêðóæåíèÿ: 
+-Запуск виртуального окружения:
 source myprojectenv/bin/activate
 
 
 GIT
 
 
--Çàãðóçêà ïðîåêòà ñ github:
+-Загрузка проекта с github:
 git init .
 git remote add origin https://github.com/User/project.git
 git pull origin master
@@ -103,56 +103,56 @@ git pull origin master
 DJANGO
 
 
--Óñòàíîâêà çàâèñèìîñòåé:
+-Установка зависимостей:
 pip install -r requirements.txt
 pip install gunicorn
 
--Ïåðåíîñ ÁÄ:
+-Перенос БД:
 python3 manage.py makemigrations [apps...]
 python3 manage.py migrate
 python3 manage.py dbshell
-delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
+DELETE FROM auth_group_permissions; DELETE FROM auth_permission; DELETE FROM django_admin_log; DELETE FROM django_content_type;
 \q
-#ñíà÷àëà íà ëîêàëå "py manage.py dumpdata > dump.json"
+# сначала на локале "py manage.py dumpdata > dump.json"
 python3 manage.py loaddata dump.json
 
 -----------------------------------------
--ÎØÈÁÊÀ "DETAIL: Key (app_label, model)=(main, price) already exists.":
+-ОШИБКА "DETAIL: Key (app_label, model)=(main, price) already exists.":
 python3 manage.py dbshell
 delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
 
--ÎØÈÁÊÀ "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser óæå âûïîëíåí íà ñåðâåðå:
+-ОШИБКА "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser óæå âûïîëíåí íà ñåðâåðå:
 python3 manage.py dbshell
 TRUNCATE django_content_type CASCADE;
 -----------------------------------------
 
--Ñáîð ñòàòè÷åñêèõ ôàéëîâ:
+-Сбор статических файлов:
 python3 manage.py collectstatic
 
--Ðàçáëîêèðîâêà 8000 ïîðòà:
+-Разблокировка 8000 порта:
 sudo ufw allow 8000
 
--Òåñò ñåðâåðà:
+-Тест сервера:
 python3 manage.py runserver 0.0.0.0:8000
 
--Çàïóñê gunicorn:
+-Запуск gunicorn:
 cd ~/myproject
 gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application
 
--Ðàçáëîêèðîâêà 80 ïîðòà:
+-Разблокировка 80 порта:
 sudo ufw allow 80
 
 
 NGINX
 
 
--Ðåäàêòèðîâàíèå êîíôèãóðàöèîííîãî ôàéëà Nginx:
+-Редактирование конфигурационного файла Nginx:
 sudo nano /etc/nginx/sites-available/default
 
--Â nano âñž óäàëèòü è âñòàâèòü:
+-В nano всё удалить и вставить:
 server {
     listen 80;
-    server_name 255.255.255.255; # çäåñü ïðîïèñàòü èëè IP-àäðåñ èëè äîìåííîå èìÿ ñåðâåðà
+    server_name 255.255.255.255; # здесь прописать или IP-адрес или доменное имя сервера
     #access_log  /var/log/nginx/example.log;
     #error_log   /var/log/nginx/error.log;
  
@@ -174,41 +174,41 @@ server {
     }
 }
 
--Ïðàâà äëÿ çàïèñè â media:
+-Права для записи в media:
 sudo chmod 777 /home/user/myproject/static/media
 
--Ïåðåçàïóñê Nginx:
+-Перезапуск Nginx:
 sudo service nginx restart
 
--Çàïóñê gunicorn:
+-Запуск gunicorn:
 gunicorn myproject.wsgi:application
 
--Îòêëþ÷åíèå âèðòóëüàíîå îêðóæåíèå:
+-Отключение виртульаное окружение:
 deactivate
 
 
 SUPERVISOR
 
 
--Óñòàíîâêà supervisor:
+-Установка supervisor:
 sudo apt-get install supervisor
 
--Ñîçäàíèå êîíôèãóðàöèîííîãî ôàéëà:
-cd /home/user/myproject/myproject 	# êàòàëîã ñ settings.py
+-Создание конфигурационного файла:
+cd /home/user/myproject/myproject 	# каталог с settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
--Â nano ïèøåì:
+-В nano пишем:
 bind = '127.0.0.1:8000'
 workers = 3		# workers=Ncpu+1
 user = "nobody"
 
--(îò root) Ñîçäàíèå êîíôèãóðàöèþ ñàìîãî supervisor:
+-(от root) Создание конфигурацию самого supervisor:
 cd /etc/supervisor/conf.d/
 touch myproject.conf
 nano myproject.conf
 
--(îò root) Â nano ïèøåì:
+-(от root) В nano пишем:
 [program:myproject]
 command=/home/user/myproject/myprojectenv/bin/gunicorn myproject.wsgi:application -c /home/user/myproject/myproject/gunicorn.conf.py
 directory=/home/user/myproject
@@ -216,25 +216,25 @@ user=nobody
 autorestart=true
 redirect_stderr=true
 
--Ïðèíóäèòåëüíîå äîáàâëåíèå supervisor â àâòîçàãðóçêó:
+-Принудительное добавление supervisor в автозагрузку:
 sudo update-rc.d supervisor enable
 
--Çàïóñê supervisor:
+-Запуск supervisor:
 sudo service supervisor start
 
--Êîìàíäû äëÿ supervisor:
-supervisorctl reread	# äàåò ñóïåðâèçîðó èíôó, ÷òî ïîìåíÿëñÿ êîíôèã
-supervisorctl update	# ïåðåçàïóñêàåì òîëüêî òå âîðêåðû, äëÿ êîòîðûõ ïîìåíÿëàñü êîíôèãóðàöèÿ
+-Команды для supervisor:
+supervisorctl reread	# дает супервизору инфу, что поменялся конфиг
+supervisorctl update	# перезапускаем только те воркеры, для которых поменялась конфигурация
 supervisorctl status myproject
-supervisor restart myproject	# åñëè èçìåíèëè êîä âîðêåðîâ
+supervisor restart myproject	# если изменили код воркеров
 
--Îñòàíîâêà ìàøèíû â êîíñîëè:
+-Остановка машины в консоли:
 shutdown -r now
 
--Ïåðåçàïóñê ïîñëå èçìíåíèé â ïðîåêòå:
+-Перезапуск после измнений в проекте:
 sudo killall gunicorn
 
 ______________
--×èñòêà êýøà
+-Чистка кэша
 apt-get install packagekit-tools
 pkcon refresh force -c -1
