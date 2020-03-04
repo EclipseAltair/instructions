@@ -1,100 +1,100 @@
 UBUNTU 18.04
 
 
--Измениение journald.conf:
+-РР·РјРµРЅРёРµРЅРёРµ journald.conf:
 nano /etc/systemd/journald.conf
 
--В nano заменить:
+-Р’ nano Р·Р°РјРµРЅРёС‚СЊ:
 SystemMaxUse=1M
 
--Подключение к серверу через ssh:
+-РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє СЃРµСЂРІРµСЂСѓ С‡РµСЂРµР· ssh:
 ssh root@SERVER_IP_ADDRESS
 
--Создание пользователя:
+-РЎРѕР·РґР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:
 adduser username 
 
--Добавление пользователя в группу sudo:
+-Р”РѕР±Р°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РіСЂСѓРїРїСѓ sudo:
 usermod -aG sudo username
 
--Настройка firewall:
+-РќР°СЃС‚СЂРѕР№РєР° firewall:
 #apt-get update
 #apt-get install ufw
 ufw app list
-ufw allow OpenSSH	#разрешить OpenSSH
-ufw enable		#включить
-ufw status		#статус
+ufw allow OpenSSH	#Г°Г Г§Г°ГҐГёГЁГІГј OpenSSH
+ufw enable		#ГўГЄГ«ГѕГ·ГЁГІГј
+ufw status		#Г±ГІГ ГІГіГ±
 
--Генерация ключа на локальной машине, с которой будет осуществляться доступ к VDS:
+-Р“РµРЅРµСЂР°С†РёСЏ РєР»СЋС‡Р° РЅР° Р»РѕРєР°Р»СЊРЅРѕР№ РјР°С€РёРЅРµ, СЃ РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµС‚ РѕСЃСѓС‰РµСЃС‚РІР»СЏС‚СЊСЃСЏ РґРѕСЃС‚СѓРї Рє VDS:
 ssh-keygen
 
--Добавление его на VDS сервер:
+-Р”РѕР±Р°РІР»РµРЅРёРµ РµРіРѕ РЅР° VDS СЃРµСЂРІРµСЂ:
 ssh-copy-id username@SERVER_IP_ADDRESS
 
--Проверка доступа к нашему серверу под новым пользователем с помощью ключей шифрования:
+-ГЏГ°Г®ГўГҐГ°ГЄГ  Г¤Г®Г±ГІГіГЇГ  ГЄ Г­Г ГёГҐГ¬Гі Г±ГҐГ°ГўГҐГ°Гі ГЇГ®Г¤ Г­Г®ГўГ»Г¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ¬ Г± ГЇГ®Г¬Г®Г№ГјГѕ ГЄГ«ГѕГ·ГҐГ© ГёГЁГґГ°Г®ГўГ Г­ГЁГї:
 ssh username@SERVER_IP_ADDRESS
 
--Запрет доступа по паролю и доступ непосредственно самого root пользователя:
+-Г‡Г ГЇГ°ГҐГІ Г¤Г®Г±ГІГіГЇГ  ГЇГ® ГЇГ Г°Г®Г«Гѕ ГЁ Г¤Г®Г±ГІГіГЇ Г­ГҐГЇГ®Г±Г°ГҐГ¤Г±ГІГўГҐГ­Г­Г® Г±Г Г¬Г®ГЈГ® root ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї:
 sudo nano /etc/ssh/sshd_config
 
--В nano заменить:
+-Г‚ nano Г§Г Г¬ГҐГ­ГЁГІГј:
 PermitRootLogin no
 PasswordAuthentication no
 
--Далее перезапускаем службу SSH:
+-Г„Г Г«ГҐГҐ ГЇГҐГ°ГҐГ§Г ГЇГіГ±ГЄГ ГҐГ¬ Г±Г«ГіГ¦ГЎГі SSH:
 sudo systemctl reload sshd
 
--Установка зависимостей:
-#удалить apache2
+-Г“Г±ГІГ Г­Г®ГўГЄГ  Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГҐГ©:
+#ГіГ¤Г Г«ГЁГІГј apache2
 sudo apt-get update
 sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx git
 
--Изменим пользователя и войдём как postgres:
+-Г€Г§Г¬ГҐГ­ГЁГ¬ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЁ ГўГ®Г©Г¤ЕѕГ¬ ГЄГ ГЄ postgres:
 sudo -u postgres psql
 
 
 POSTGRESQL
 
 
--Создание NAME базы данных (по settings.py):
+-Г‘Г®Г§Г¤Г Г­ГЁГҐ NAME ГЎГ Г§Г» Г¤Г Г­Г­Г»Гµ (ГЇГ® settings.py):
 CREATE DATABASE myproject;
 
--Создание USER базы данных по PASSWORD (по settings.py):
+-Г‘Г®Г§Г¤Г Г­ГЁГҐ USER ГЎГ Г§Г» Г¤Г Г­Г­Г»Гµ ГЇГ® PASSWORD (ГЇГ® settings.py):
 CREATE USER myprojectuser WITH PASSWORD 'password';
 
--Изменение настроек
+-Г€Г§Г¬ГҐГ­ГҐГ­ГЁГҐ Г­Г Г±ГІГ°Г®ГҐГЄ
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
 ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
 ALTER ROLE myprojectuser SET timezone TO 'UTC';
 
--Передача новому пользователю права на доступ к этой базе данных:
+-ГЏГҐГ°ГҐГ¤Г Г·Г  Г­Г®ГўГ®Г¬Гі ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гѕ ГЇГ°Г ГўГ  Г­Г  Г¤Г®Г±ГІГіГЇ ГЄ ГЅГІГ®Г© ГЎГ Г§ГҐ Г¤Г Г­Г­Г»Гµ:
 GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 
--Закрыть командную строку postgresql:
+-Г‡Г ГЄГ°Г»ГІГј ГЄГ®Г¬Г Г­Г¤Г­ГіГѕ Г±ГІГ°Г®ГЄГі postgresql:
 \q
 
 
 VIRTUALENV
 
 
--Устанавливаем virtualenv:
+-Г“Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ virtualenv:
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install virtualenv
 
--Создание каталога для приложения и переход в него:
+-Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЄГ ГІГ Г«Г®ГЈГ  Г¤Г«Гї ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї ГЁ ГЇГҐГ°ГҐГµГ®Г¤ Гў Г­ГҐГЈГ®:
 mkdir ~/myprojectdir
 cd ~/myprojectdir
 
--Создание виртуального окружения:
+-Г‘Г®Г§Г¤Г Г­ГЁГҐ ГўГЁГ°ГІГіГ Г«ГјГ­Г®ГЈГ® Г®ГЄГ°ГіГ¦ГҐГ­ГЁГї:
 virtualenv myprojectenv
 
--Запуск виртуального окружения: 
+-Г‡Г ГЇГіГ±ГЄ ГўГЁГ°ГІГіГ Г«ГјГ­Г®ГЈГ® Г®ГЄГ°ГіГ¦ГҐГ­ГЁГї: 
 source myprojectenv/bin/activate
 
 
 GIT
 
 
--Загрузка проекта с github:
+-Г‡Г ГЈГ°ГіГ§ГЄГ  ГЇГ°Г®ГҐГЄГІГ  Г± github:
 git init .
 git remote add origin https://github.com/User/project.git
 git pull origin master
@@ -103,56 +103,56 @@ git pull origin master
 DJANGO
 
 
--Установка зависимостей:
+-Г“Г±ГІГ Г­Г®ГўГЄГ  Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГҐГ©:
 pip install -r requirements.txt
 pip install gunicorn
 
--Перенос БД:
+-ГЏГҐГ°ГҐГ­Г®Г± ГЃГ„:
 python3 manage.py makemigrations [apps...]
 python3 manage.py migrate
 python3 manage.py dbshell
 delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
 \q
-#сначала на локале "py manage.py dumpdata > dump.json"
+#Г±Г­Г Г·Г Г«Г  Г­Г  Г«Г®ГЄГ Г«ГҐ "py manage.py dumpdata > dump.json"
 python3 manage.py loaddata dump.json
 
 -----------------------------------------
--ОШИБКА "DETAIL: Key (app_label, model)=(main, price) already exists.":
+-ГЋГГ€ГЃГЉГЂ "DETAIL: Key (app_label, model)=(main, price) already exists.":
 python3 manage.py dbshell
 delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
 
--ОШИБКА "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser уже выполнен на сервере:
+-ГЋГГ€ГЃГЉГЂ "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser ГіГ¦ГҐ ГўГ»ГЇГ®Г«Г­ГҐГ­ Г­Г  Г±ГҐГ°ГўГҐГ°ГҐ:
 python3 manage.py dbshell
 TRUNCATE django_content_type CASCADE;
 -----------------------------------------
 
--Сбор статических файлов:
+-Г‘ГЎГ®Г° Г±ГІГ ГІГЁГ·ГҐГ±ГЄГЁГµ ГґГ Г©Г«Г®Гў:
 python3 manage.py collectstatic
 
--Разблокировка 8000 порта:
+-ГђГ Г§ГЎГ«Г®ГЄГЁГ°Г®ГўГЄГ  8000 ГЇГ®Г°ГІГ :
 sudo ufw allow 8000
 
--Тест сервера:
+-Г’ГҐГ±ГІ Г±ГҐГ°ГўГҐГ°Г :
 python3 manage.py runserver 0.0.0.0:8000
 
--Запуск gunicorn:
+-Г‡Г ГЇГіГ±ГЄ gunicorn:
 cd ~/myproject
 gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application
 
--Разблокировка 80 порта:
+-ГђГ Г§ГЎГ«Г®ГЄГЁГ°Г®ГўГЄГ  80 ГЇГ®Г°ГІГ :
 sudo ufw allow 80
 
 
 NGINX
 
 
--Редактирование конфигурационного файла Nginx:
+-ГђГҐГ¤Г ГЄГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГ®Г­Г­Г®ГЈГ® ГґГ Г©Г«Г  Nginx:
 sudo nano /etc/nginx/sites-available/default
 
--В nano всё удалить и вставить:
+-Г‚ nano ГўГ±Еѕ ГіГ¤Г Г«ГЁГІГј ГЁ ГўГ±ГІГ ГўГЁГІГј:
 server {
     listen 80;
-    server_name 255.255.255.255; # здесь прописать или IP-адрес или доменное имя сервера
+    server_name 255.255.255.255; # Г§Г¤ГҐГ±Гј ГЇГ°Г®ГЇГЁГ±Г ГІГј ГЁГ«ГЁ IP-Г Г¤Г°ГҐГ± ГЁГ«ГЁ Г¤Г®Г¬ГҐГ­Г­Г®ГҐ ГЁГ¬Гї Г±ГҐГ°ГўГҐГ°Г 
     #access_log  /var/log/nginx/example.log;
     #error_log   /var/log/nginx/error.log;
  
@@ -174,41 +174,41 @@ server {
     }
 }
 
--Права для записи в media:
+-ГЏГ°Г ГўГ  Г¤Г«Гї Г§Г ГЇГЁГ±ГЁ Гў media:
 sudo chmod 777 /home/user/myproject/static/media
 
--Перезапуск Nginx:
+-ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ Nginx:
 sudo service nginx restart
 
--Запуск gunicorn:
+-Г‡Г ГЇГіГ±ГЄ gunicorn:
 gunicorn myproject.wsgi:application
 
--Отключение виртульаное окружение:
+-ГЋГІГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГўГЁГ°ГІГіГ«ГјГ Г­Г®ГҐ Г®ГЄГ°ГіГ¦ГҐГ­ГЁГҐ:
 deactivate
 
 
 SUPERVISOR
 
 
--Установка supervisor:
+-Г“Г±ГІГ Г­Г®ГўГЄГ  supervisor:
 sudo apt-get install supervisor
 
--Создание конфигурационного файла:
-cd /home/user/myproject/myproject 	# каталог с settings.py
+-Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГ®Г­Г­Г®ГЈГ® ГґГ Г©Г«Г :
+cd /home/user/myproject/myproject 	# ГЄГ ГІГ Г«Г®ГЈ Г± settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
--В nano пишем:
+-Г‚ nano ГЇГЁГёГҐГ¬:
 bind = '127.0.0.1:8000'
 workers = 3		# workers=Ncpu+1
 user = "nobody"
 
--(от root) Создание конфигурацию самого supervisor:
+-(Г®ГІ root) Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГѕ Г±Г Г¬Г®ГЈГ® supervisor:
 cd /etc/supervisor/conf.d/
 touch myproject.conf
 nano myproject.conf
 
--(от root) В nano пишем:
+-(Г®ГІ root) Г‚ nano ГЇГЁГёГҐГ¬:
 [program:myproject]
 command=/home/user/myproject/myprojectenv/bin/gunicorn myproject.wsgi:application -c /home/user/myproject/myproject/gunicorn.conf.py
 directory=/home/user/myproject
@@ -216,25 +216,25 @@ user=nobody
 autorestart=true
 redirect_stderr=true
 
--Принудительное добавление supervisor в автозагрузку:
+-ГЏГ°ГЁГ­ГіГ¤ГЁГІГҐГ«ГјГ­Г®ГҐ Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ supervisor Гў Г ГўГІГ®Г§Г ГЈГ°ГіГ§ГЄГі:
 sudo update-rc.d supervisor enable
 
--Запуск supervisor:
+-Г‡Г ГЇГіГ±ГЄ supervisor:
 sudo service supervisor start
 
--Команды для supervisor:
-supervisorctl reread	# дает супервизору инфу, что поменялся конфиг
-supervisorctl update	# перезапускаем только те воркеры, для которых поменялась конфигурация
+-ГЉГ®Г¬Г Г­Г¤Г» Г¤Г«Гї supervisor:
+supervisorctl reread	# Г¤Г ГҐГІ Г±ГіГЇГҐГ°ГўГЁГ§Г®Г°Гі ГЁГ­ГґГі, Г·ГІГ® ГЇГ®Г¬ГҐГ­ГїГ«Г±Гї ГЄГ®Г­ГґГЁГЈ
+supervisorctl update	# ГЇГҐГ°ГҐГ§Г ГЇГіГ±ГЄГ ГҐГ¬ ГІГ®Г«ГјГЄГ® ГІГҐ ГўГ®Г°ГЄГҐГ°Г», Г¤Г«Гї ГЄГ®ГІГ®Г°Г»Гµ ГЇГ®Г¬ГҐГ­ГїГ«Г Г±Гј ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГї
 supervisorctl status myproject
-supervisor restart myproject	# если изменили код воркеров
+supervisor restart myproject	# ГҐГ±Г«ГЁ ГЁГ§Г¬ГҐГ­ГЁГ«ГЁ ГЄГ®Г¤ ГўГ®Г°ГЄГҐГ°Г®Гў
 
--Остановка машины в консоли:
+-ГЋГ±ГІГ Г­Г®ГўГЄГ  Г¬Г ГёГЁГ­Г» Гў ГЄГ®Г­Г±Г®Г«ГЁ:
 shutdown -r now
 
--Перезапуск после измнений в проекте:
+-ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГЇГ®Г±Г«ГҐ ГЁГ§Г¬Г­ГҐГ­ГЁГ© Гў ГЇГ°Г®ГҐГЄГІГҐ:
 sudo killall gunicorn
 
 ______________
--Чистка кэша
+-Г—ГЁГ±ГІГЄГ  ГЄГЅГёГ 
 apt-get install packagekit-tools
 pkcon refresh force -c -1
