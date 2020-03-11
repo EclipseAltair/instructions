@@ -1,0 +1,106 @@
+NGINX
+
+
+-Редактирование конфигурационного файла Nginx:
+sudo nano /etc/nginx/sites-available/default
+
+-В nano всё удалить и вставить:
+server {
+    listen 80;
+    server_name domain1.ru;
+    #access_log  /var/log/nginx/example.log;
+    #error_log   /var/log/nginx/error.log;
+ 
+    location /static/ {
+        root /home/user/myproject/static;
+        expires 30d;
+    }
+ 
+    location / {
+        proxy_pass http://127.0.0.1:8000; 
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+server {
+    listen 80;
+    server_name domain2.ru;
+    #access_log  /var/log/nginx/example.log;
+    #error_log   /var/log/nginx/error.log;
+ 
+    location /static/ {
+        root /home/user/myproject/static;
+        expires 30d;
+    }
+ 
+    location / {
+        proxy_pass http://127.0.0.1:8009; 
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+
+GUNICORN
+
+
+-Создание конфигурационного файла:
+cd /home/user/myproject1/myproject1 	# каталог с settings.py
+touch gunicorn.conf.py
+nano gunicorn.conf.py
+
+-В nano пишем:
+bind = '127.0.0.1:8000'
+workers = 3		# workers=Ncpu+1
+user = "nobody"
+
+-Создание конфигурационного файла:
+cd /home/user/myproject2/myproject2 	# каталог с settings.py
+touch gunicorn.conf.py
+nano gunicorn.conf.py
+
+-В nano пишем:
+bind = '127.0.0.1:8009'
+workers = 3		# workers=Ncpu+1
+user = "nobody"
+
+
+SUPERVISOR
+
+
+-(от root) Создание конфигурацию самого supervisor:
+cd /etc/supervisor/conf.d/
+touch myproject1.conf
+nano myproject1.conf
+
+-(от root) В nano пишем:
+[program:myproject1]
+command=/home/user/myproject1/myproject1env/bin/gunicorn myproject1.wsgi:application -c /home/user/myproject1/myproject1/gunicorn.conf.py
+directory=/home/user/myproject1
+user=nobody
+autorestart=true
+redirect_stderr=true
+
+-(от root) Создание конфигурацию самого supervisor:
+cd /etc/supervisor/conf.d/
+touch myproject2.conf
+nano myproject2.conf
+
+-(от root) В nano пишем:
+[program:myproject1]
+command=/home/user/myproject2/myproject2env/bin/gunicorn myproject2.wsgi:application -c /home/user/myproject2/myproject2/gunicorn.conf.py
+directory=/home/user/myproject2
+user=nobody
+autorestart=true
+redirect_stderr=true
+
+-Запуск supervisor:
+sudo service supervisor start
+
+-Команды для supervisor:
+supervisorctl reread
+supervisorctl update
+supervisorctl status
+supervisorctl restart

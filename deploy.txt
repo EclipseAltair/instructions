@@ -1,4 +1,4 @@
-UBUNTU 18.04
+﻿UBUNTU 18.04
 
 
 -Измениение journald.conf:
@@ -20,9 +20,9 @@ usermod -aG sudo username
 #apt-get update
 #apt-get install ufw
 ufw app list
-ufw allow OpenSSH	#ðàçðåøèòü OpenSSH
-ufw enable		#âêëþ÷èòü
-ufw status		#ñòàòóñ
+ufw allow OpenSSH	#разрешить OpenSSH
+ufw enable
+ufw status
 
 -Генерация ключа на локальной машине, с которой будет осуществляться доступ к VDS:
 ssh-keygen
@@ -104,8 +104,8 @@ DJANGO
 
 
 -Установка зависимостей:
-pip install -r requirements.txt
-pip install gunicorn
+pip3 install -r requirements.txt
+pip3 install gunicorn
 
 -Перенос БД:
 python3 manage.py makemigrations [apps...]
@@ -121,7 +121,7 @@ python3 manage.py loaddata dump.json
 python3 manage.py dbshell
 delete from auth_group_permissions; delete from auth_permission; delete from django_admin_log; delete from django_content_type;
 
--ОШИБКА "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser óæå âûïîëíåí íà ñåðâåðå:
+-ОШИБКА "DETAIL: Key (app_label, model)=(admin, logentry) already exists." - createsuperuser на локале:
 python3 manage.py dbshell
 TRUNCATE django_content_type CASCADE;
 -----------------------------------------
@@ -161,7 +161,7 @@ server {
         expires 30d;
     }
  
-    location /media {
+    location /media/ {
         root /home/user/myproject/static;
         expires 30d;
     }
@@ -187,11 +187,8 @@ gunicorn myproject.wsgi:application
 deactivate
 
 
-SUPERVISOR
+GUNICORN
 
-
--Установка supervisor:
-sudo apt-get install supervisor
 
 -Создание конфигурационного файла:
 cd /home/user/myproject/myproject 	# каталог с settings.py
@@ -202,6 +199,13 @@ nano gunicorn.conf.py
 bind = '127.0.0.1:8000'
 workers = 3		# workers=Ncpu+1
 user = "nobody"
+
+
+SUPERVISOR
+
+
+-Установка supervisor:
+sudo apt-get install supervisor
 
 -(от root) Создание конфигурацию самого supervisor:
 cd /etc/supervisor/conf.d/
@@ -226,7 +230,7 @@ sudo service supervisor start
 supervisorctl reread	# дает супервизору инфу, что поменялся конфиг
 supervisorctl update	# перезапускаем только те воркеры, для которых поменялась конфигурация
 supervisorctl status myproject
-supervisor restart myproject	# если изменили код воркеров
+supervisorctl restart myproject	# если изменили код воркеров
 
 -Остановка машины в консоли:
 shutdown -r now
