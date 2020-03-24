@@ -1,4 +1,4 @@
-VCS -> Import into Version Control -> Share Project on GitHub		# создание репозитория на github
+﻿VCS -> Import into Version Control -> Share Project on GitHub		# создание репозитория на github
 
 git init								# инициализация
 git add .								# добавление всех файлов
@@ -28,7 +28,8 @@ git status						# статус файлов в репозитории
 git log	-5						# 5 последних коммитов
 git log --oneline --graph --decorate --all		# удобный вывод всех коммитов
 
-git rm --cached --ignore-unmatch index.html		# удаление index.html из репозитория
+git remote remove origin https://github.com/EclipseAltair/project.git	# сбросить удаленное подключение
+git rm --cached --ignore-unmatch index.html				# удаление index.html из репозитория
 
 git branch -v						# последний коммит в ветке
 git branch -a						# список веток в проекте
