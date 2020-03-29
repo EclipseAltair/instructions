@@ -1,4 +1,4 @@
-DOCKER
+﻿DOCKER
 
 
 sudo groupadd docker					# создать группу докер
@@ -24,6 +24,7 @@ docker rm <NAMES>					# удалить контейнер
 docker ps -aq -f status=exited				# список всех остановленных контейнеров
 docker rm -v $(docker ps -aq -f status=exited)		# удалить все остановленные контейнеры
 docker images						# спиок образов
+docker rmi $(docker images -q)	--force			# удалить все образы
 
 docker commit <NAMES> <DockerID>/<Repository>		# создание образа из контейнера
 docker run <DockerID>/<Repository> cowsay "hi"		# запуск контейнера с приложением cowsay
