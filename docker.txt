@@ -24,6 +24,7 @@ docker rm <NAMES>					# удалить контейнер
 docker ps -aq -f status=exited				# список всех остановленных контейнеров
 docker rm -v $(docker ps -aq -f status=exited)		# удалить все остановленные контейнеры
 docker images						# спиок образов
+docker images | head
 docker rmi $(docker images -q)	--force			# удалить все образы
 
 docker commit <NAMES> <DockerID>/<Repository>		# создание образа из контейнера
@@ -33,6 +34,8 @@ docker login						# подключиться к аккаунту
 docker push <DockerID>/<Repository>			# отправка образа в репозиторий
 
 docker build -t <DockerID>/<Repository>			# собрать Dockerfile (t - имя образа)
+
+docker save <Repository>:<Tag> > dump.docker		# dump
 
 
 DOCKER-COMPOSE
@@ -45,3 +48,4 @@ docker-compose ps					# посмотреть запущенные контейн
 docker-compose rm <service_name>			# удаление по имени сервиса в docker-compose.yaml
 
 docker run -v /data ubuntu 				# инициализация тома (v - volumes)
+

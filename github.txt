@@ -28,8 +28,8 @@ git status						# статус файлов в репозитории
 git log	-5						# 5 последних коммитов
 git log --oneline --graph --decorate --all		# удобный вывод всех коммитов
 
-git remote remove origin https://github.com/EclipseAltair/project.git	# сбросить удаленное подключение
-git rm --cached --ignore-unmatch index.html				# удаление index.html из репозитория
+git remote remove origin				# сбросить удаленное подключение
+git rm --cached --ignore-unmatch index.html		# удаление index.html из репозитория
 
 git branch -v						# последний коммит в ветке
 git branch -a						# список веток в проекте
