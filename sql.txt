@@ -1,0 +1,51 @@
+SELECT * FROM table;						# выбрать все строки из таблицы table
+SELECT * FROM table using ~<~;					# выбрать все строки из таблицы table в кодировке UTF-8
+SELECT DISTINCT * FROM table;					# выбрать все неповторяющиеся строки из таблицы table
+SELECT * FROM table LIKE 'abc%';				# выбрать все строки, где 'abc...'
+SELECT * FROM table LIKE '%xyz';				# выбрать все строки, где '...xyz'
+SELECT * FROM table LIKE '%klm%';				# выбрать все строки, где 'klm'
+SELECT * FROM table LIMIT 5;					# выбрать первые 5 строк
+SELECT * FROM table LIMIT 5 OFFSET 3;				# выбрать 5 строк начиная с 4
+SELECT * FROM table ORDER BY table1, table2;			# выбрать все строки сортируя по table1, затем по table2
+SELECT * FROM table ORDER BY table1 DESC;			# выбрать все строки сортируя по table1 в порядке убывания
+SELECT * FROM table ORDER BY table1 ASC;			# выбрать все строки сортируя по table1 в порядке возрастания
+SELECT * FROM table WHERE id=5 AND age=20;			# выбрать все строки с id=5 и age=20
+SELECT * FROM table WHERE id=7 OR age=30;			# выбрать все строки с id=7 или age=30
+SELECT * FROM table WHERE id BETWEEN 3 AND 7;			# выбрать все строки с id от 3 до 7
+SELECT * FROM table WHERE id IN (1,3,5);			# выбрать все строки с id=1, id=3 и id=5
+SELECT CONCAT (name, ',', surname) FROM table;			# выбрать все строки в виде Peter, Petrov
+SELECT CONCAT (name, ',', surname) AS fullname FROM table;	# выбрать все строки в виде Peter, Petrov в новый стобец fullname
+SELECT price+100 AS price FROM table;				# выбрать все строки, в price записать price+100
+SELECT UPPER(name) AS name FROM table;				# выбрать все строки, в name записать name в верхнем регистре
+SELECT LOWER(name) AS name FROM table;				# выбрать все строки, в name записать name в нижнем регистре
+SELECT SQRT(price) AS price FROM table;				# выбрать все строки, в price записать квадратные корни price
+SELECT AVG(price) AS price FROM table;				# в одну строку, в price записать среднее арифметическое всех строк price
+SELECT SUM(price) AS price FROM table;				# в одну строку, в price записать сумму всех строк price
+SELECT COALESCE(price, 0) AS not_null_price FROM table;		# выбрать все строки, если price=NULL заменить на 0 и записать в not_null_price
+
+SELECT c.id, c.name, o.name FROM customer c, order o		# выбрать строки из таблиц customer и order, где id покупателя соответствует
+WHERE c.id=o.customer_id;					# id покупателя в заказе
+
+SELECT name FROM table1 JOIN table2 ON table1.name=table2.name	# выбрать строки из таблиц table1 и table2, где table1.name=table2.name
+
+SELECT c.name, p.name FROM customer c LEFT JOIN product p ON    # выбрать строки c.name и соответствующие p.name из таблиц customer и product,
+c.id=p.customer_id;						# где c.id=p.customer_id
+
+SELECT c.name, SUM(p.price) FROM customer c LEFT JOIN product p # выбрать строки c.name и соответствующие суммы p.price из таблиц customer и product,
+ON c.id=p.customer_id GROUP BY c.name;				# где c.id=p.customer_id и сгруппровать одинаковые c.name
+
+SELECT c.name, SUM(p.price) FROM customer c LEFT JOIN product p # выбрать строки c.name и соответствующие суммы p.price из таблиц customer и product,
+ON c.id=p.customer_id GROUP BY c.name HAVING SUM(p.price)>0;	# где c.id=p.customer_id и сгруппровать одинаковые c.name, где сумма p.price>0
+
+SELECT name FROM table1 UNION SELECT name FROM table2;		# объединяет таблицы, удаляя полностью совпадающие записи
+SELECT name FROM table1 UNION ALL SELECT name FROM table2;	# объединяет таблицы
+
+INSERT INTO table (id, name, surname) VALUES (3, 'Jon', 'Jj');	# вставить запись в таблицу
+UPDATE table SET price=1000 WHERE id=1;				# установить значение price=1000, где id=1
+DELETE FROM table WHERE id=1;					# удалить запись в table с id=1
+
+CREATE TABLE user 						# создание таблицы
+(
+ id int PRIMARY KEY,
+ name varchar(128)
+)
