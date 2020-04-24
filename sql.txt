@@ -49,3 +49,16 @@ CREATE TABLE user 						# создание таблицы
  id int PRIMARY KEY,
  name varchar(128)
 )
+
+ALTER TABLE table ADD name varchar(32);				# добавить столбец в таблицу
+ALTER TABLE table DROP COLUMN name;				# удалить столбец из таблицы
+ALTER TABLE table CHANGE first_name name varchar(32);		# переименовать столбец first_name в name
+DROP TABLE table;						# удалить таблицу
+RENAME TABLE table TO new_table;				# переименовать таблицу
+CREATE VIEW view AS SELECT name, surname FROM table WHERE id>5;	# создать представление
+
+CREATE OR REPLACE VIEW view AS SELECT name, surname 		# создать представление
+FROM table WHERE id>5;
+
+DROP VIEW table;						# удалить представление
+
