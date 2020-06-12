@@ -238,7 +238,7 @@ shutdown -r now
 -Перезапуск после измнений в проекте:
 sudo killall gunicorn
 
-______________
+______________________________________
 -Чистка кэша
 apt-get install packagekit-tools
 pkcon refresh force -c -1

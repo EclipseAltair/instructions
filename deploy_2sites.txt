@@ -1,10 +1,10 @@
 NGINX
 
 
--Редактирование конфигурационного файла Nginx:
+-РћС‚РєСЂС‹С‚СЊ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ Nginx:
 sudo nano /etc/nginx/sites-available/default
 
--В nano всё удалить и вставить:
+-Р’ nano РІСЃС‘ СѓРґР°Р»РёС‚СЊ Рё РІСЃС‚Р°РІРёС‚СЊ:
 server {
     listen 80;
     server_name domain1.ru;
@@ -46,22 +46,22 @@ server {
 GUNICORN
 
 
--Создание конфигурационного файла:
-cd /home/user/myproject1/myproject1 	# каталог с settings.py
+-РЎРѕР·РґР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё 1 РїСЂРѕРµРєС‚Р°:
+cd /home/user/myproject1/myproject1 	# пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
--В nano пишем:
+-Р’ nano РЅР°РїРёСЃР°С‚СЊ:
 bind = '127.0.0.1:8000'
 workers = 3		# workers=Ncpu+1
 user = "nobody"
 
--Создание конфигурационного файла:
-cd /home/user/myproject2/myproject2 	# каталог с settings.py
+-РЎРѕР·РґР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё 2 РїСЂРѕРµРєС‚Р°:
+cd /home/user/myproject2/myproject2 	# пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
--В nano пишем:
+-Р’ nano РЅР°РїРёСЃР°С‚СЊ:
 bind = '127.0.0.1:8009'
 workers = 3		# workers=Ncpu+1
 user = "nobody"
@@ -70,12 +70,12 @@ user = "nobody"
 SUPERVISOR
 
 
--(от root) Создание конфигурацию самого supervisor:
+-(РћС‚ root) СЃРѕР·РґР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё supervisor 1 РїСЂРѕРµРєС‚Р°:
 cd /etc/supervisor/conf.d/
 touch myproject1.conf
 nano myproject1.conf
 
--(от root) В nano пишем:
+-(РћС‚ root) РІ nano РЅР°РїРёСЃР°С‚СЊ:
 [program:myproject1]
 command=/home/user/myproject1/myproject1env/bin/gunicorn myproject1.wsgi:application -c /home/user/myproject1/myproject1/gunicorn.conf.py
 directory=/home/user/myproject1
@@ -83,12 +83,12 @@ user=nobody
 autorestart=true
 redirect_stderr=true
 
--(от root) Создание конфигурацию самого supervisor:
+-(РћС‚ root) СЃРѕР·РґР°РЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё supervisor 2 РїСЂРѕРµРєС‚Р°:
 cd /etc/supervisor/conf.d/
 touch myproject2.conf
 nano myproject2.conf
 
--(от root) В nano пишем:
+-(РћС‚ root) РІ nano РЅР°РїРёСЃР°С‚СЊ:
 [program:myproject1]
 command=/home/user/myproject2/myproject2env/bin/gunicorn myproject2.wsgi:application -c /home/user/myproject2/myproject2/gunicorn.conf.py
 directory=/home/user/myproject2
@@ -96,10 +96,10 @@ user=nobody
 autorestart=true
 redirect_stderr=true
 
--Запуск supervisor:
+-Р—Р°РїСѓСЃРє supervisor:
 sudo service supervisor start
 
--Команды для supervisor:
+-РљРѕРјР°РЅРґС‹ supervisor:
 supervisorctl reread
 supervisorctl update
 supervisorctl status
