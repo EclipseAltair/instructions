@@ -44,7 +44,6 @@ PasswordAuthentication no
 sudo systemctl reload sshd
 
 -Установка зависимостей:
-#óäàëèòü apache2
 sudo apt-get update
 sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx git
 

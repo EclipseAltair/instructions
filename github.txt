@@ -1,4 +1,4 @@
-﻿VCS -> Import into Version Control -> Share Project on GitHub		# создание репозитория на github
+﻿VCS -> Import into Version Control -> Share Project on GitHub	# создание репозитория на github
 
 git init								# инициализация
 git add .								# добавление всех файлов
@@ -7,42 +7,43 @@ git remote add origin https://github.com/EclipseAltair/project.git	# удале�
 git push -u origin master						# загрузка в master
 
 git clone https://github.com/EclipseAltair/project.git	# клонирование репозитория
-VCS -> Checkout from Version Control -> Git		# клонирование репозитория
+VCS -> Checkout from Version Control -> Git			# клонирование репозитория
 
-git checkout -- index.html				# отмена изменений в файле (ctrl+Z...)
-git checkout .						# отмена изменений во всех файлах (ctrl+Z...)
+git checkout -- index.html			# отмена изменений в файле (ctrl+Z...)
+git checkout .					# отмена изменений во всех файлах (ctrl+Z...)
 
-git add "file.txt" (ctrl+alt+A)				# добавление файла
-git add --all						# добавление всех файлов
-git reset index.html					# отмена добавления (add) файла
-git reset .						# отмена добавления (add) всех файлов
+git add "file.txt" (ctrl+alt+A)		# добавление файла
+git add --all					# добавление всех файлов
+git reset index.html				# отмена добавления (add) файла
+git reset .					# отмена добавления (add) всех файлов
 
-git commit -m "commit" (ctrl+K)				# фисация изменений
-git reset --soft HEAD^1					# возвращение на 1 коммит назад без отмены изменений в файле
-git reset --hard HEAD^1					# возвращение на 1 коммит назад с отменой измненений в файле
+git commit -m "commit" (ctrl+K)		# фисация изменений
+git reset --soft HEAD^1			# возвращение на 1 коммит назад без отмены изменений в файле
+git reset --hard HEAD^1			# возвращение на 1 коммит назад с отменой измненений в файле
 
-git pull (ctrl+T)					# выгрузка с github
-git push						# загрузка на github
+git pull (ctrl+T)				# выгрузка с github
+git push					# загрузка на github
+git push --force				# загрузка на github принудительная
 
-git status						# статус файлов в репозитории
-git log	-5						# 5 последних коммитов
-git log --oneline --graph --decorate --all		# удобный вывод всех коммитов
+git status					# статус файлов в репозитории
+git log -5					# 5 последних коммитов
+git log --oneline --graph --decorate --all	# удобный вывод всех коммитов
 
-git remote remove origin				# сбросить удаленное подключение
-git rm --cached --ignore-unmatch index.html		# удаление index.html из репозитория
+git remote remove origin			# сбросить удаленное подключение
+git rm --cached --ignore-unmatch index.html	# удаление index.html из репозитория
 
-git branch -v						# последний коммит в ветке
-git branch -a						# список веток в проекте
-git branch dev 						# создание ветки dev
-git checkout dev					# переход в ветку dev 
-git checkout -b dev					# создание и переход в ветку dev
+git branch -v					# последний коммит в ветке
+git branch -a					# список веток в проекте
+git branch dev 				# создание ветки dev
+git checkout dev				# переход в ветку dev 
+git checkout -b dev				# создание и переход в ветку dev
 
-git merge dev						# слияние ветки dev в master
-git branch -D dev					# удаление ветки dev
-VCS -> Git -> Resolve Conflicts...			# разрешение конфликтов слияния
+git merge dev					# слияние ветки dev в master
+git branch -D dev				# удаление ветки dev
+VCS -> Git -> Resolve Conflicts...		# разрешение конфликтов слияния
 
-git config --global user.name "user"			# установка пользователя в настройки
-git config --global user.email "user@mail.ru"		# установка почты в настройки
-git config --global core.autocrlf true			# конвертация в crlf (для Windows)
-git config --global core.autocrlf input			# конвертация в lf (для Linux)
-git config --list					# список настроек
+git config --global user.name "user"		# установка пользователя в настройки
+git config --global user.email "user@mail.ru"	# установка почты в настройки
+git config --global core.autocrlf true	# конвертация в crlf (для Windows)
+git config --global core.autocrlf input	# конвертация в lf (для Linux)
+git config --list				# список настроек

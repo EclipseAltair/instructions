@@ -47,7 +47,7 @@ GUNICORN
 
 
 -Создание конфигурации 1 проекта:
-cd /home/user/myproject1/myproject1 	# ������� � settings.py
+cd /home/user/myproject1/myproject1 	# папка с settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
@@ -57,7 +57,7 @@ workers = 3		# workers=Ncpu+1
 user = "nobody"
 
 -Создание конфигурации 2 проекта:
-cd /home/user/myproject2/myproject2 	# ������� � settings.py
+cd /home/user/myproject2/myproject2 	# папка с settings.py
 touch gunicorn.conf.py
 nano gunicorn.conf.py
 
