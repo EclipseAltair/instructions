@@ -4,7 +4,35 @@ uptime				# время с последнего включения
 lscpu				# данные процессора
 whatis {app}			# что делает команда
 whereis {app}			# где исполняющий файл 
+whoami				# имя текущего пользователя
 locate	{app}			# где все файлы
+
+ifconfig			# показать ip
+ip addr show			# показать ip
+route				# адрес роутера
+ping -с 4 {site}		# запросы к серверу 4 раза
+host {site}			# ip сайта
+dig {site}			# ip сайта и dns
+
+top				# процессы (Shift+P - сортировака по CPU | Shift+M - сортировка по опер. памяти)
+free -g			# кол-во памяти
+ps [user]			# процессы [пользователя]
+ps -aux			# процессы с данными
+ps -aux | grep {pattern}	# процессы с данными, отсеять {pattern}
+
+useradd -m {name}		# создать пользователя
+userdel -r {name}		# удалить пользователя
+groupadd {group}		№ создать группу
+groupdel {group}		# удалить группу
+usermod -aG {group} {user}	# добавить пользователя в группу
+deluser {user} {group}		# удалить пользователя из группы
+
+chown {user} {dir}		# изменить пользователя директории	
+chgrp {group} {dir}		# изменить группу директории	
+chmod o+x {dir}		# others+execute
+chmod g-w,u+r {dir}		# group-write | user+read
+chmod a=r			# all=read
+chmod 777 {file}		# всем все права
 
 ls				# что в директории
 ll				# что в директории (+ права, скрытые файлы)
@@ -33,3 +61,23 @@ grep -i {pattern} {dir}	# искать шаблон в директории (-i 
 grep [A-Za-z._-]* {file}	# искать эти символы (* - любое кол-во символов) в файле
 grep -E "(kek|lol)" {file}	# искать kek или lol (-E [expression] - выражение)
 
+sort {file} > {sorted_file}			# перенаправление вывода, перезапись файла
+sort {file} >> {sorted_file}			# перенаправление вывода, добавление в конец файла
+grep {pattern} {dir} 2> /dev/null		# перенаправление ошибок в никуда
+grep {pattern} {dir} > {file} 2> /dev/null	# перенаправление правильного в файл и ошибки в никуда
+grep {pattern} {dir} &> {file}		# перенаправление всего в файл
+
+tar cf {file.tar} {dir} 	# архивирование папки (c [create] | f [file)
+tat tf {file.tar}		# просмотреть архив (t [test] | f [file])
+tar xvf {file.tar}		# распаковать архив (x [extract] | v [verbose] | f [file])
+gzip {file.tar}		# сжать архив
+gunzip {file.tar.gz}		# разжать архив
+bzip2 {file.tar}		# сжать архив
+bunzip2 {file.tar.bz2}		# разжать архив
+xz {file.tar}			# сжать архив
+unxz {file.tar.xz}		# разжать архив
+tar czf {file.tar} {dir} 	# архивирование папки с сжатием gzip (c [create] | z [gzip] | f [file)
+tar cjf {file.tar} {dir} 	# архивирование папки с сжатием bzip2 (c [create] | j [bzip2] | f [file)
+tar cJf {file.tar} {dir} 	# архивирование папки с сжатием xz (c [create] | J [xz] | f [file)
+zip -r {file.zip} {dir}	# архивирование папки zip (r [recursion])
+unzip {file.zip}		# распаковать папку zip (r [recursion])
