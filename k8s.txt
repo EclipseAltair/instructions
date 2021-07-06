@@ -1,0 +1,28 @@
+kubectl get nodes                                   # посмотреть ноды
+kubectl get pods                                    # посмотреть поды default
+kubectl get --namespace=kek pods                    # посмотреть поды окружения kek
+kubectl get -n kek deploy                           # посмотреть деплойменты окружения kek
+kubectl describe pods foo                           # посмотреть описание пода foo
+kubectl describe deploy foo                         # посмотреть описание деплоймента foo
+
+kubectl exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
+kubectl logs -n kek foo                             # логи контейнера
+kubectl port-forward -n kek foo 8080:80             # подключение к поду, перенаправить локальный 8080 на 80 контейнера
+
+kubectl apply -f deployment.yaml                    # создать под
+kubectl delete -f deployment.yaml                   # удалить под
+
+kubectl scale deploy foo --replicas 4                           # сделать 4 копии деплоймента foo
+kubectl get rs                                                  # посмотреть replica set
+kubectl autoscale deploy foo --min=4 --max=6 --cpu-percent=80   # HorizontalPodsAutoscaling (min 4, max 6 подов)
+kubectl get hpa                                                 # посмотреть все HPA
+
+kubectl rollout history deployment/foo -n kek       # история деплоймента foo
+kubectl rollout status deployment/foo -n kek        # статус деплоймента foo
+
+kubectl get -n kek svc                              # посмотреть сервисы окружения kek
+kubectl get -n kek ingress                          # посмотреть ингресс окружения kek
+
+
+helm install foo foo-chart -n kek -f values.st.yaml     # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
+helm upgrade foo foo-chart -n kek -f values.st.yaml     # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
