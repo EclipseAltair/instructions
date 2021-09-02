@@ -23,6 +23,10 @@ kubectl rollout status deployment/foo -n kek        # статус деплой�
 kubectl get -n kek svc                              # посмотреть сервисы окружения kek
 kubectl get -n kek ingress                          # посмотреть ингресс окружения kek
 
+yc init                                                         # инициализация, ре-инициализация кластеров
+yc config profile list                                          # список доступных кластеров
+yc config profile activate foo                                  # переключиться на кластер foo
+yc managed-kubernetes cluster get-credentials foo --external    # переключить контекст на кластер foo
 
 helm install foo foo-chart -n kek -f values.st.yaml     # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
 helm upgrade foo foo-chart -n kek -f values.st.yaml     # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
