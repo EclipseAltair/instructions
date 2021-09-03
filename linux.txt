@@ -2,82 +2,84 @@ man {app}			# помощь
 info [app]			# помощь
 uptime				# время с последнего включения
 lscpu				# данные процессора
-whatis {app}			# что делает команда
-whereis {app}			# где исполняющий файл 
+whatis {app}		# что делает команда
+whereis {app}		# где исполняющий файл
 whoami				# имя текущего пользователя
-locate	{app}			# где все файлы
+locate	{app}		# где все файлы
 
 ifconfig			# показать ip
-ip addr show			# показать ip
+ip addr show		# показать ip
 route				# адрес роутера
-ping -с 4 {site}		# запросы к серверу 4 раза
+ping -с 4 {site}	# запросы к серверу 4 раза
 host {site}			# ip сайта
 dig {site}			# ip сайта и dns
 
 top				# процессы (Shift+P - сортировака по CPU | Shift+M - сортировка по опер. памяти)
 free -g			# кол-во памяти
-ps [user]			# процессы [пользователя]
+ps [user]		# процессы [пользователя]
 ps -aux			# процессы с данными
 ps -aux | grep {pattern}	# процессы с данными, отсеять {pattern}
 
 useradd -m {name}		# создать пользователя
 userdel -r {name}		# удалить пользователя
-groupadd {group}		№ создать группу
+groupadd {group}		# создать группу
 groupdel {group}		# удалить группу
 usermod -aG {group} {user}	# добавить пользователя в группу
 deluser {user} {group}		# удалить пользователя из группы
 
 chown {user} {dir}		# изменить пользователя директории	
 chgrp {group} {dir}		# изменить группу директории	
-chmod o+x {dir}		# others+execute
+chmod o+x {dir}		    # others+execute
 chmod g-w,u+r {dir}		# group-write | user+read
-chmod a=r			# all=read
+chmod a=r			    # all=read
 chmod 777 {file}		# всем все права
 
 ls				# что в директории
 ll				# что в директории (+ права, скрытые файлы)
 pwd				# путь, где мы сейчас
-cd {dir}			# изменить диркеторию
+cd {dir}		# изменить диркеторию
 
 touch {file}			# создать файл (обновить время)
 cp {file} {dir} -v		# скопировать файл (какой, куда) (-v [verbose] - показать процесс копирования)
-mv {file} {dir/file}		# переместить файл (какой, куда)
+mv {file} {dir/file}	# переместить файл (какой, куда)
 mv {file} {newfile}		# переименовать файл (какой, новое имя)
-rm -r				# стереть файл (-r [recursion] - удалить много файлов)
-mkdir {dir}			# создать директорию
-rmdir {dir}			# удалить пустую директорию
+rm -r {dir}				# стереть файл (-r [recursion] - удалить много файлов в директории)
+mkdir {dir}			    # создать директорию
+rmdir {dir}			    # удалить пустую директорию
 
 ln -s {file} {dir}		# ссылка на файл (какой, куда) (-s [symbolic] - символьная ссылка)
 ln {file} {newfile}		# дубликат файла (какой, новый файл), оба будут изменяться
 
 find /home -name "file*.txt"	# найти файл (-name - с именем)
-wc {file}			# кол-во строк, слов, символов
-cat {file}			# вывести файл в терминал
-sort -n {file}			# вывести отсортированный файл в терминал (-n [numbers] - по цифрам)
-cut -d "," -f 3 {file}		# вывести вырезанную часть файла (-d [delimeter] - разделитель | -f [field] - поле по счёту)
+wc {file}			            # кол-во строк, слов, символов
+cat {file}			            # вывести файл в терминал
+sort -n {file}			        # вывести отсортированный файл в терминал (-n [numbers] - по цифрам)
+cut -d "," -f 3 {file}		    # вывести вырезанную часть файла (-d [delimeter] - разделитель | -f [field] - поле по счёту)
 cut -d "," -f 3 {file}	| sort	# + отсортировать
 
-grep -i {pattern} {dir}	# искать шаблон в директории (-i [ignore] - игнор чувствительность к регистру)
+grep -i {pattern} {dir}	    # искать шаблон в директории (-i [ignore] - игнор чувствительность к регистру)
 grep [A-Za-z._-]* {file}	# искать эти символы (* - любое кол-во символов) в файле
 grep -E "(kek|lol)" {file}	# искать kek или lol (-E [expression] - выражение)
 
-sort {file} > {sorted_file}			# перенаправление вывода, перезапись файла
-sort {file} >> {sorted_file}			# перенаправление вывода, добавление в конец файла
-grep {pattern} {dir} 2> /dev/null		# перенаправление ошибок в никуда
+sort {file} > {sorted_file}			        # перенаправление вывода, перезапись файла
+sort {file} >> {sorted_file}			    # перенаправление вывода, добавление в конец файла
+grep {pattern} {dir} 2> /dev/null		    # перенаправление ошибок в никуда
 grep {pattern} {dir} > {file} 2> /dev/null	# перенаправление правильного в файл и ошибки в никуда
-grep {pattern} {dir} &> {file}		# перенаправление всего в файл
+grep {pattern} {dir} &> {file}		        # перенаправление всего в файл
+
+sed -i "s/^kek: .*$/kek: foo/" {file}       # заменить "kek: *" на "kek: foo" в файле
 
 tar cf {file.tar} {dir} 	# архивирование папки (c [create] | f [file)
-tat tf {file.tar}		# просмотреть архив (t [test] | f [file])
-tar xvf {file.tar}		# распаковать архив (x [extract] | v [verbose] | f [file])
-gzip {file.tar}		# сжать архив
+tat tf {file.tar}		    # просмотреть архив (t [test] | f [file])
+tar xvf {file.tar}		    # распаковать архив (x [extract] | v [verbose] | f [file])
+gzip {file.tar}		        # сжать архив
 gunzip {file.tar.gz}		# разжать архив
-bzip2 {file.tar}		# сжать архив
+bzip2 {file.tar}		    # сжать архив
 bunzip2 {file.tar.bz2}		# разжать архив
-xz {file.tar}			# сжать архив
-unxz {file.tar.xz}		# разжать архив
+xz {file.tar}			    # сжать архив
+unxz {file.tar.xz}		    # разжать архив
 tar czf {file.tar} {dir} 	# архивирование папки с сжатием gzip (c [create] | z [gzip] | f [file)
 tar cjf {file.tar} {dir} 	# архивирование папки с сжатием bzip2 (c [create] | j [bzip2] | f [file)
 tar cJf {file.tar} {dir} 	# архивирование папки с сжатием xz (c [create] | J [xz] | f [file)
-zip -r {file.zip} {dir}	# архивирование папки zip (r [recursion])
-unzip {file.zip}		# распаковать папку zip (r [recursion])
+zip -r {file.zip} {dir}	    # архивирование папки zip (r [recursion])
+unzip {file.zip}		    # распаковать папку zip (r [recursion])

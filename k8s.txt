@@ -1,11 +1,13 @@
-kubectl get nodes                                   # посмотреть ноды
-kubectl get pods                                    # посмотреть поды default
-kubectl get --namespace=kek pods                    # посмотреть поды окружения kek
-kubectl get -n kek deploy                           # посмотреть деплойменты окружения kek
+kubectl get -n kek nodes                            # посмотреть ноды окружения kek
+kubectl get pods                                    # посмотреть поды окружения default
+kubectl get deploy                                  # посмотреть деплойменты
+kubectl get secret foo                              # посмотреть список секретов деплоймента foo
 kubectl describe pods foo                           # посмотреть описание пода foo
 kubectl describe deploy foo                         # посмотреть описание деплоймента foo
+kubectl delete deploy foo                           # удалить деплоймент foo
 
 kubectl exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
+kubectl exec -it -n kek foo -- printenv             # вывести переменные окружения в контейнере foo окружения kek
 kubectl logs -n kek foo                             # логи контейнера
 kubectl port-forward -n kek foo 8080:80             # подключение к поду, перенаправить локальный 8080 на 80 контейнера
 
@@ -23,10 +25,16 @@ kubectl rollout status deployment/foo -n kek        # статус деплой�
 kubectl get -n kek svc                              # посмотреть сервисы окружения kek
 kubectl get -n kek ingress                          # посмотреть ингресс окружения kek
 
-yc init                                                         # инициализация, ре-инициализация кластеров
-yc config profile list                                          # список доступных кластеров
-yc config profile activate foo                                  # переключиться на кластер foo
-yc managed-kubernetes cluster get-credentials foo --external    # переключить контекст на кластер foo
+yc init                                                                 # инициализация, ре-инициализация кластеров
+yc config profile list                                                  # список доступных кластеров
+yc config profile activate foo                                          # переключиться на кластер foo
+yc managed-kubernetes cluster get-credentials foo --external  --force   # переключить контекст на кластер foo
 
-helm install foo foo-chart -n kek -f values.st.yaml     # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
-helm upgrade foo foo-chart -n kek -f values.st.yaml     # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.st.yaml
+helm secrets install foo foo-chart -n kek -f values.yaml -f values.yaml    # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
+helm secrets upgrade foo foo-chart -n kek -f values.yaml -f values.yaml    # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
+
+helm secrets view secrets.yaml      # просмотреть секреты
+helm secrets edit secrets.yaml      # изменить секреты
+
+helm list -Aa             # список деплоев в кластере
+helm rollback foo 1       # откат деплоя foo по ревизии 1
