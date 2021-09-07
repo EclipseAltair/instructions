@@ -31,6 +31,11 @@ kubectl config use-context foo                      # переключиться
 kubectl config set-context foo                      # задать контекст foo
 kubectl config delete-context foo                   # удалить конекст foo
 
+kubectl get certificate -n kek                      # получить сертификат в окружении kek
+kubectl get certificaterequest -n kek               # получить сертификат request в окружении kek
+kubectl describe certificate -n kek                 # описание сертификата в окружении kek
+kubectl describe certificaterequest -n kek          # описание сертификат request в окружении kek
+
 yc init                                                                 # инициализация, ре-инициализация кластеров
 yc config profile list                                                  # список доступных кластеров
 yc config profile activate foo                                          # переключиться на кластер foo
