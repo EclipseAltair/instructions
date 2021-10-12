@@ -47,3 +47,9 @@ git config --global user.email "user@mail.ru"	# установка почты в
 git config --global core.autocrlf true	# конвертация в crlf (для Windows)
 git config --global core.autocrlf input	# конвертация в lf (для Linux)
 git config --list				# список настроек
+
+git tag -l                              # список тэгов
+git tag -a "v21.10.2"                   # создать тэг с названием (в редакторе ввести комментарий)
+git push origin --tags                  # выгрузить тэги
+git tag --delete "v21.10.2"             # удалить тэг локально
+git push origin :refs/tags/v21.10.2     # выгрузить удаление тэга
