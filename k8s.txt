@@ -21,6 +21,7 @@ kubectl get hpa                                                 # посмотр
 
 kubectl rollout history deployment/foo -n kek       # история деплоймента foo
 kubectl rollout status deployment/foo -n kek        # статус деплоймента foo
+kubectl rollout undo deployment foo -n kek          # откатиться до предыдущего replicaset в деплойменте foo
 
 kubectl get -n kek svc                              # посмотреть сервисы окружения kek
 kubectl get -n kek ingress                          # посмотреть ингресс окружения kek
