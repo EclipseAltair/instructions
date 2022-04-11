@@ -1,0 +1,7 @@
+Good state - dead state (stateless)
+Если приложение хранит state, то pod становится уникальным и не переподнимется при падении
+Лучше хранить в БД, S3, Redis, Memcached и т.д.
+
+Если нужно хранить state:
+- HostPath
+pod: hostPath(/etc/kubernetes)  # Не безопасно. Если есть доступ к hostPath, то есть доступ к админским правам

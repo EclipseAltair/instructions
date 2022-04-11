@@ -42,6 +42,8 @@ yc config profile list                                                  # спи
 yc config profile activate foo                                          # переключиться на кластер foo
 yc managed-kubernetes cluster get-credentials foo --external  --force   # переключить контекст на кластер foo
 
+yc container registry create --name foo             # создать реестр foo в Container Registry
+
 helm secrets install foo foo-chart -n kek -f values.yaml -f values.yaml    # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
 helm secrets upgrade foo foo-chart -n kek -f values.yaml -f values.yaml    # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
 
