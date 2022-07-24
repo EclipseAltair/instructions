@@ -1,0 +1,8 @@
+helm secrets install foo foo-chart -n kek -f values.yaml -f values.yaml    # выгрузить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
+helm secrets upgrade foo foo-chart -n kek -f values.yaml -f values.yaml    # обновить приложение foo по чарту foo-chart в окружении kek по переменным values.yaml и секретами secrets.yaml
+
+helm secrets view secrets.yaml      # просмотреть секреты
+helm secrets edit secrets.yaml      # изменить секреты
+
+helm list -Aa             # список деплоев в кластере
+helm rollback foo 1       # откат деплоя foo по ревизии 1

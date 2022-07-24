@@ -1,0 +1,6 @@
+yc init                                                                 # инициализация, ре-инициализация кластеров
+yc config profile list                                                  # список доступных кластеров
+yc config profile activate foo                                          # переключиться на кластер foo
+yc managed-kubernetes cluster get-credentials foo --external  --force   # переключить контекст на кластер foo
+
+yc container registry create --name foo             # создать реестр foo в Container Registry

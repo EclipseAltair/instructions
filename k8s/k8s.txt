@@ -1,0 +1,43 @@
+k get -n kek nodes                            # посмотреть ноды окружения kek
+k get pods                                    # посмотреть поды окружения default
+k get po foo -o wide                          # расширенная информация по поду
+k get deploy                                  # посмотреть деплойменты
+k get secret foo                              # посмотреть список секретов деплоймента foo
+k get secret foo -o yaml                      # посмотреть внутренности секретов деплоймента foo
+k get cm                                      # посмотреть configmap
+k describe pods foo                           # посмотреть описание пода foo
+k describe deploy foo                         # посмотреть описание деплоймента foo
+k delete deploy foo                           # удалить деплоймент foo
+
+k exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
+k exec -it -n kek foo -- printenv             # вывести переменные окружения в контейнере foo окружения kek
+k logs -n kek foo                             # логи контейнера
+k port-forward -n kek foo 8080:80             # подключение к поду, перенаправить локальный 8080 на 80 контейнера
+
+k apply -f deployment.yaml                    # создать деплоймент
+k delete -f deployment.yaml                   # удалить деплоймент
+
+k scale deploy foo --replicas 4                           # сделать 4 копии деплоймента foo
+k get rs                                                  # посмотреть replica set
+k autoscale deploy foo --min=4 --max=6 --cpu-percent=80   # HorizontalPodsAutoscaling (min 4, max 6 подов)
+k get hpa                                                 # посмотреть все HPA
+
+k rollout history deployment/foo -n kek       # история деплоймента foo
+k rollout status deployment/foo -n kek        # статус деплоймента foo
+k rollout undo deployment foo -n kek          # откатиться до предыдущего replicaset в деплойменте foo
+
+k get -n kek svc                              # посмотреть сервисы окружения kek
+k get -n kek ingress                          # посмотреть ингресс окружения kek
+
+k config get-contexts                         # посмотреть список конекстов
+k config current-context                      # посмотреть текущий контекст
+k config use-context foo                      # переключиться на контекст foo
+k config set-context foo                      # задать контекст foo
+k config delete-context foo                   # удалить конекст foo
+
+k get certificate -n kek                      # получить сертификат в окружении kek
+k get certificaterequest -n kek               # получить сертификат request в окружении kek
+k describe certificate -n kek                 # описание сертификата в окружении kek
+k describe certificaterequest -n kek          # описание сертификат request в окружении kek
+
+k create secret generic test --from-literal=test1=asdf --from-literal=test2=qwer    # создание секрета через cli
