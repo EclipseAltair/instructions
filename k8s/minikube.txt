@@ -8,7 +8,10 @@ m addons enable ingress  # установить аддон ingress
 m service kubernetes-dashboard -n kubernetes-dashboard или m dashboard  # открыть dashboard
 
 eval $(minikube docker-env)    # подключаем окружение minikube
+docker build -t myapp:dev .
 или сразу работаем через minikube
-m image build -t myapp:dev .
+m image build -t myapp:dev .    # билдим сразу через minikube
 
 m image ls  # посмотреть образы в minikube
+
+m mount .:/app      # примонтировать директорию в которой находимся в /app в minikube
