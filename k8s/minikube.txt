@@ -1,0 +1,14 @@
+m status    # статус minikube
+m start     # развернуть кластер
+m stop      # остановить кластер
+m delete    # удалить кластер
+
+m addons enable ingress  # установить аддон ingress
+
+m service kubernetes-dashboard -n kubernetes-dashboard или m dashboard  # открыть dashboard
+
+eval $(minikube docker-env)    # подключаем окружение minikube
+или сразу работаем через minikube
+m image build -t myapp:dev .
+
+m image ls  # посмотреть образы в minikube
