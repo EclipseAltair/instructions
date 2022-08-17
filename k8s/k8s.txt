@@ -1,4 +1,6 @@
-k get -n kek nodes                            # посмотреть ноды окружения kek
+k get -n kek node                             # посмотреть ноды окружения kek
+k get node --show-labels                      # показать метки ноды
+k get node -l kubernetes.io/os=linux          # вывести только ноды с такой меткой
 k get pods                                    # посмотреть поды окружения default
 k get po foo -o wide                          # расширенная информация по поду
 k get deploy                                  # посмотреть деплойменты
@@ -7,10 +9,19 @@ k get secret foo -o yaml                      # посмотреть внутр�
 k get cm                                      # посмотреть configmap
 k get job                                     # посмотреть Job
 k get cj                                      # посмотреть CronJob
+k get ep                                      # посмотреть эндпоинты
+k get role foo                                # посмотреть роль foo
+k get rolebinding foo                         # посмотреть rolebinding foo
+k get clusterrole foo                         # посмотреть кластерную роль foo
+k get clusterrolebinding foo                  # посмотреть clusterrolebinding foo
+k get sa                                      # получить ServiceAccount
+k get resourcesquots resource-quota           # получить ResourseQuota (кол-во сущностей)
+k get limitranges limit-range                 # получить LimitRange (CPU, memory)
 k describe pods foo                           # посмотреть описание пода foo
 k describe deploy foo                         # посмотреть описание деплоймента foo
 k delete deploy foo                           # удалить деплоймент foo
 
+k run --rm -it --image centosadmin/utils test --bash  # запускаем под где лежат утилиты
 k exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
 k exec -it -n kek foo -- printenv             # вывести переменные окружения в контейнере foo окружения kek
 k logs -n kek foo                             # логи контейнера
