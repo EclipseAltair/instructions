@@ -55,3 +55,9 @@ k describe certificate -n kek                 # описание сертифи�
 k describe certificaterequest -n kek          # описание сертификат request в окружении kek
 
 k create secret generic test --from-literal=test1=asdf --from-literal=test2=qwer    # создание секрета через cli
+
+kubeseal --controller-name sealed-secrets-app --fetch-cert > smena.pem  # подтянуть ключ из текущего контекста
+    echo -n 'SecretValue' | base64
+        или                                                             # кодировка секрета
+    cat /home/.ssh/id_xxx | base64
+kubeseal < secret.yml --cert smena.pem -o yaml > sealed_secret.yml      # создание sealed секрета
