@@ -26,6 +26,7 @@ k exec -it -n kek foo -- sh                   # войти в контейнер
 k exec -it -n kek foo -- printenv             # вывести переменные окружения в контейнере foo окружения kek
 k logs -n kek foo                             # логи контейнера
 k port-forward -n kek foo 8080:80             # подключение к поду, перенаправить локальный 8080 на 80 контейнера
+k proxy --port=8080 &                         # прокси для подключению к API локально
 
 k apply -f deployment.yaml                    # создать деплоймент
 k delete -f deployment.yaml                   # удалить деплоймент
