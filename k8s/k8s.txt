@@ -1,66 +1,85 @@
-k get -n kek node                             # посмотреть ноды окружения kek
+# Node
+k get node -n kek                             # посмотреть ноды окружения kek
 k get node --show-labels                      # показать метки ноды
 k get node -l kubernetes.io/os=linux          # вывести только ноды с такой меткой
+
+# Deploy
+k get deploy                                  # посмотреть деплойменты
+k delete deploy foo                           # удалить деплоймент foo
+k describe deploy foo                         # описание деплоймента foo
+
+# Pod
 k get pods                                    # посмотреть поды окружения default
 k get po foo -o wide                          # расширенная информация по поду
-k get deploy                                  # посмотреть деплойменты
+
+# Secret
 k get secret foo                              # посмотреть список секретов деплоймента foo
 k get secret foo -o yaml                      # посмотреть внутренности секретов деплоймента foo
+k create secret generic test --from-literal=test1=asdf --from-literal=test2=qwer    # создание секрета через cli
+
+# Certificate
+k get certificate                             # получить сертификат
+k get certificaterequests                     # получить запрос сертификата
+k get order                                   # с какими параметрами проходит проверка и какой у неё текущий статус
+k get challenges                              # сама проверка осуществляется ресурсом challenges
+
+# Roles
+k get role                                    # посмотреть роль
+k get rolebinding                             # посмотреть rolebinding
+k get clusterrole                             # посмотреть кластерную роль
+k get clusterrolebinding                      # посмотреть clusterrolebinding
+
+# Разное
+k get svc                                     # посмотреть сервисы
+k get ingress                                 # посмотреть ингрессы
+k get rs                                      # посмотреть replica set
+k get sa                                      # получить ServiceAccount
 k get cm                                      # посмотреть configmap
 k get job                                     # посмотреть Job
 k get cj                                      # посмотреть CronJob
 k get ep                                      # посмотреть эндпоинты
-k get role foo                                # посмотреть роль foo
-k get rolebinding foo                         # посмотреть rolebinding foo
-k get clusterrole foo                         # посмотреть кластерную роль foo
-k get clusterrolebinding foo                  # посмотреть clusterrolebinding foo
-k get sa                                      # получить ServiceAccount
+k get hpa                                     # посмотреть HorizontalPodAutoScaler
+
+# Limits
 k get resourcesquots resource-quota           # получить ResourseQuota (кол-во сущностей)
 k get limitranges limit-range                 # получить LimitRange (CPU, memory)
-k delete deploy foo                           # удалить деплоймент foo
 
+# Debug
 k describe po foo                            # посмотреть описание пода foo
 k logs foo
 journalctl -u kubelet
 journalctl -u kubelet -xn | less
 kubectl get events | grep foo
-kubelet logs
 
-k run --rm -it --image centosadmin/utils test --bash  # запускаем под где лежат утилиты
+# Вход в Container
+k run --rm -it --image centosadmin/utils test --bash  # запуск пода, где лежат например утилиты
 k exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
 k exec -it -n kek foo -- printenv             # вывести переменные окружения в контейнере foo окружения kek
-k logs -n kek foo                             # логи контейнера
 k port-forward -n kek foo 8080:80             # подключение к поду, перенаправить локальный 8080 на 80 контейнера
 k proxy --port=8080 &                         # прокси для подключению к API локально
 
-k apply -f deployment.yaml                    # создать деплоймент
+# Применение файлов
+k create -f deployment.yaml                    # создать деплоймент
+k apply -f deployment.yaml                    # обновить/создать деплоймент
 k delete -f deployment.yaml                   # удалить деплоймент
 
+# Scaling
 k scale deploy foo --replicas 4                           # сделать 4 копии деплоймента foo
-k get rs                                                  # посмотреть replica set
 k autoscale deploy foo --min=4 --max=6 --cpu-percent=80   # HorizontalPodsAutoscaling (min 4, max 6 подов)
-k get hpa                                                 # посмотреть все HPA
 
-k rollout history deployment/foo -n kek       # история деплоймента foo
-k rollout status deployment/foo -n kek        # статус деплоймента foo
-k rollout undo deployment foo -n kek          # откатиться до предыдущего replicaset в деплойменте foo
+# Версии
+k rollout history deployment/foo              # история деплоймента foo
+k rollout status deployment/foo               # статус деплоймента foo
+k rollout undo deployment foo                 # откатиться до предыдущего replicaset в деплойменте foo
 
-k get -n kek svc                              # посмотреть сервисы окружения kek
-k get -n kek ingress                          # посмотреть ингресс окружения kek
-
+# Контексты
 k config get-contexts                         # посмотреть список конекстов
 k config current-context                      # посмотреть текущий контекст
 k config use-context foo                      # переключиться на контекст foo
 k config set-context foo                      # задать контекст foo
 k config delete-context foo                   # удалить конекст foo
 
-k get certificate -n kek                      # получить сертификат в окружении kek
-k get certificaterequest -n kek               # получить сертификат request в окружении kek
-k describe certificate -n kek                 # описание сертификата в окружении kek
-k describe certificaterequest -n kek          # описание сертификат request в окружении kek
-
-k create secret generic test --from-literal=test1=asdf --from-literal=test2=qwer    # создание секрета через cli
-
+# Kubeseal
 kubeseal --controller-name sealed-secrets-app --fetch-cert > smena.pem  # подтянуть ключ из текущего контекста
     echo -n 'SecretValue' | base64
         или                                                             # кодировка секрета
