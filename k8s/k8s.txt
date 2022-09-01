@@ -17,9 +17,14 @@ k get clusterrolebinding foo                  # посмотреть clusterrole
 k get sa                                      # получить ServiceAccount
 k get resourcesquots resource-quota           # получить ResourseQuota (кол-во сущностей)
 k get limitranges limit-range                 # получить LimitRange (CPU, memory)
-k describe pods foo                           # посмотреть описание пода foo
-k describe deploy foo                         # посмотреть описание деплоймента foo
 k delete deploy foo                           # удалить деплоймент foo
+
+k describe po foo                            # посмотреть описание пода foo
+k logs foo
+journalctl -u kubelet
+journalctl -u kubelet -xn | less
+kubectl get events | grep foo
+kubelet logs
 
 k run --rm -it --image centosadmin/utils test --bash  # запускаем под где лежат утилиты
 k exec -it -n kek foo -- sh                   # войти в контейнер foo окружения kek
