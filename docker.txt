@@ -1,6 +1,5 @@
 ﻿DOCKER
 
-
 sudo groupadd docker					# создать группу докер
 groups							# посмотреть все группы
 sudo usermod -aG docker $(whoami)			# добавление пользователя в группу docker
@@ -39,7 +38,6 @@ docker save <Repository>:<Tag> > dump.docker		# dump
 
 
 DOCKER-COMPOSE
-
 
 docker-compose build					# собрать docker-compose
 docker-compose up					# запуск docker-compose и собрать если не собраны
