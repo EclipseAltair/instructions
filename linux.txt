@@ -20,6 +20,9 @@ ps [user]		# процессы [пользователя]
 ps -aux			# процессы с данными
 ps -aux | grep {pattern}	# процессы с данными, отсеять {pattern}
 
+df -h
+du -sh ./*
+
 useradd -m {name}		# создать пользователя
 userdel -r {name}		# удалить пользователя
 groupadd {group}		# создать группу
