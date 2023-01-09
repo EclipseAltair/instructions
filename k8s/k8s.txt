@@ -50,7 +50,7 @@ k describe po foo                            # посмотреть описан
 k logs foo
 journalctl -u kubelet
 journalctl -u kubelet -xn | less
-kubectl get events | grep foo
+k get events | grep foo
 
 # Вход в Container
 k run --rm -it --image centosadmin/utils test --bash  # запуск пода, где лежат например утилиты
@@ -86,3 +86,6 @@ kubeseal --controller-name sealed-secrets-app --fetch-cert > smena.pem  # под
         или                                                             # кодировка секрета
     cat /home/.ssh/id_xxx | base64
 kubeseal < secret.yml --cert smena.pem -o yaml > sealed_secret.yml      # создание sealed секрета
+
+# Нагрузочный тест
+k run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
