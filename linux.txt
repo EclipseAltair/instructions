@@ -75,7 +75,7 @@ grep {pattern} {dir} &> {file}		        # перенаправление все�
 sed -i "s/^kek: .*$/kek: foo/" {file}       # заменить "kek: *" на "kek: foo" в файле
 
 tar cf {file.tar} {dir} 	# архивирование папки (c [create] | f [file)
-tat tf {file.tar}		    # просмотреть архив (t [test] | f [file])
+tar tf {file.tar}		    # просмотреть архив (t [test] | f [file])
 tar xvf {file.tar}		    # распаковать архив (x [extract] | v [verbose] | f [file])
 gzip {file.tar}		        # сжать архив
 gunzip {file.tar.gz}		# разжать архив
