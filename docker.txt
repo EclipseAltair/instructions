@@ -47,3 +47,29 @@ docker-compose rm <service_name>			# удаление по имени серви
 
 docker run -v /data ubuntu 				# инициализация тома (v - volumes)
 
+### Связать docker-compose контейнеры в сеть с другим контейнером
+
+docker network create kek  # создать сеть kek
+
+# Docker-Compose
+
+services:
+  <сервис>:
+    ...
+    networks:
+      - kek
+
+networks:
+  kek:
+    external:
+      name: kek
+
+# Docker
+
+docker run -it myapp:v1  # запустить приложение
+docker network connect kek myapp  # присоединить к сети kek приложение myapp
+или
+docker run -it --net kek myapp:v1  # запустить приложение в сети kek
+
+docker network inspect kek  # проверить подключенные приложения к сети kek
+

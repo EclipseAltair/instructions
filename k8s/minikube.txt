@@ -15,6 +15,8 @@ docker build -t myapp:dev .
 или сразу работаем через minikube
 m image build -t myapp:dev .    # билдим сразу через minikube
 
+eval $(minikube docker-env --unset)  # для отключения окружения minikube
+
 m image ls  # посмотреть образы в minikube
 
 k run myapp --image=docker.io/library/myapp:dev --env="var1=val1" --env="var2=val2" --port=8002  # запуск деплоя
