@@ -49,27 +49,22 @@ docker run -v /data ubuntu 				# инициализация тома (v - volume
 
 ### Связать docker-compose контейнеры в сеть с другим контейнером
 
-docker network create kek  # создать сеть kek
-
-# Docker-Compose
-
+*** Docker-Compose config *********
 services:
+  ...
   <сервис>:
-    ...
-    networks:
-      - kek
+    ports:
+      - "1234:1234"  # не должно быть IP
+  ...
 
 networks:
-  kek:
-    external:
-      name: kek
+  mynet:
+    driver: bridge
+******
 
-# Docker
+docker-compose up <сервис>
 
-docker run -it myapp:v1  # запустить приложение
-docker network connect kek myapp  # присоединить к сети kek приложение myapp
-или
-docker run -it --net kek myapp:v1  # запустить приложение в сети kek
+ip addr  # достать ip (192.168.0.*) и заменить в env на этот ip в подключениях к базам из docker-compose
 
-docker network inspect kek  # проверить подключенные приложения к сети kek
-
+docker build -t myapp:v1 .  # собрать проект
+docker run -it -p 8000:8000 myapp:v1  # запустить приложение
