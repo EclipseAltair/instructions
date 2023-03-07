@@ -49,7 +49,7 @@ docker run -v /data ubuntu 				# инициализация тома (v - volume
 
 ### Связать docker-compose контейнеры в сеть с другим контейнером
 
-*** Docker-Compose config *********
+*** Docker-Compose config ***
 services:
   ...
   <сервис>:
