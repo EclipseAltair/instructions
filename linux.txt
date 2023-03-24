@@ -55,7 +55,11 @@ rmdir {dir}			    # удалить пустую директорию
 ln -s {file} {dir}		# ссылка на файл (какой, куда) (-s [symbolic] - символьная ссылка)
 ln {file} {newfile}		# дубликат файла (какой, новый файл), оба будут изменяться
 
-find /home -name "file*.txt"	# найти файл (-name - с именем)
+find . -name *.txt	                                    # найти все txt файлы
+find . -name *.txt -delete                              # удалить все txt файлы
+find . -type d -name "kek"                              # найти все директории kek
+find . -type d -name "kek" -exec rm -r {} +             # Удалить все директории kek
+find . -type f -print0 | xargs -0 sed -i 's:#.*$::g'    # Удалить все комментарии с #
 wc {file}			            # кол-во строк, слов, символов
 cat {file}			            # вывести файл в терминал
 sort -n {file}			        # вывести отсортированный файл в терминал (-n [numbers] - по цифрам)
