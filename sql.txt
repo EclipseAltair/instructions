@@ -62,3 +62,7 @@ FROM table WHERE id>5;
 
 DROP VIEW table;						# удалить представление
 
+### PostgreSQL
+
+pg_dump -O -x -h <host|ip> -p <port> -U <user> -d <db-name> > dump.sql  # Сделать dump
+psql -h <host|ip> -p <port> -U <user> -d <db-name> < dump.sql           # Загрузить dump
