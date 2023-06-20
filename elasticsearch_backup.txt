@@ -1,0 +1,48 @@
+### Настроить бэкапы для elasticsearch на обоих серверах
+
+## Сделать на обоих серверах
+
+ssh <server>
+$ cd /
+/$ sudo mkdir backup
+/$ sudo chown -R elasticsearch:elasticsearch /backup
+/$ sudo vim /etc/elasticsearch/elasticsearch.yml
+# добавить в конец:
+> path.repo: ["/backup"]
+
+/$ sudo service elasticsearch restart
+/$ curl -X PUT "http://localhost:9200/_snapshot/backup?pretty" -H 'Content-Type: application/json' -d' { "type": "fs", "settings": { "location": "/backup", "compress": true } } '
+# {
+#  "acknowledged" : true
+# }
+/$ curl -X GET "http://localhost:9200/_snapshot/_all?pretty"  # Провроеряем настройки снэпшота
+#{
+#  "backup" : {
+#    "type" : "fs",
+#    "uuid" : "cD4mxfI1RPeWsYm4l9yXTg",
+#    "settings" : {
+#      "compress" : "true",
+#      "location" : "/backup"
+#    }
+#  }
+#}
+
+# Удалить бэкапы
+# curl -X DELETE "http://localhost:9200/_snapshot/backup?pretty"
+
+### Перенос данных
+
+ssh <server1>
+$ curl -X GET "localhost:9200/_cat/indices"  # выводим индексы (выписываем куда-нибудь, чтобы потом сверить)
+$ curl -X PUT "http://localhost:9200/_snapshot/backup/snapshot_001?wait_for_completion=true&pretty"  # Создаем снэпшот
+$ curl -X GET "http://localhost:9200/_cat/snapshots/backup?v&s=id&pretty"
+#id           repository  status ...
+#snapshot_001 backup     SUCCESS ...
+$ scp -r /backup farfor@<IP_server1>:/tmp/backup
+
+ssh <server2>
+$ sudo mv /tmp/backup/* /backup
+$ sudo chown -R elasticsearch:elasticsearch /backup
+$ curl -X POST "http://localhost:9200/_snapshot/backup/snapshot_001/_restore?wait_for_completion=true&pretty" -H 'Content-Type: application/json' -d' { "feature_states":[ "geoip" ] } '
+$ curl -X GET "localhost:9200/_cat/indices"  # сверяем индексы
+$ sudo rm -r /tmp/backup
