@@ -16,8 +16,9 @@ sudo iptables-save > ./iptables.rules                                       # з
 sudo ss -ntlp                    # socket stat - все открытые порты tcp
 sudo ss -ntulp                   # дополнительно udp
 
-sudo iptables -L -t nat -nv                                                             # t - таблица nat
+sudo iptables -L -t nat -nv                                  # t - таблица nat
     # цепочки PREROUTING, INPUT, OUTPUT, POSTROUTING
+sudo iptables -t nat -S | grep my-deployment                 # правила iptables в k8s для my-deployment
 
 ### Редирект портов ###
 
