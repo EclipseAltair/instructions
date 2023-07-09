@@ -1,6 +1,6 @@
 # Начало
-2. Отключить swap
-2. Отключить SELinux?
+1. Отключить swap
+2. Отключить SELinux
 3. Отключить firewall
 
 # Python
@@ -18,6 +18,9 @@
 - Ceph - сеть (min 10 Гб/с) интерфейсов хранилищ
 - CSI (Container Storage Interface) - унификация интерфейсов таких как Ceph, Portworx, NetApp и т.д. в k8s, docker swarm и т.д.
   - Общается с внешними компонентами через UNIX domain sockets с помощью gRPC
+- NAT (Network Address Translation) - передача пакетов на границах разных сетей (преобразование IPs)
+  - SNAT (Source NAT) - выход запроса наружу (меняется source IP)
+  - DNAT (Destination NAT) - входящие запросы (меняется destination IP)
 
 # Хосты
 - k8s не работает с файлами /etc/hosts

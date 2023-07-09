@@ -63,6 +63,7 @@ GarbageCollector:
 - Стоит на все нодах
 - Управляет сетевыми правилами на нодах
 - Фактически реализует Service (ipvs и iptables)
+  - Service - это набор правил iptables
 
 ## Баги
 - Есть deploy, но нет pods - сломался controller manager

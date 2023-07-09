@@ -1,0 +1,56 @@
+ip -a                                                                       # посмотреть сетевые интерфейсы
+sudo iptables -L -nv                                                        # L - режим списка, n - вывод в цифрах, v - подробный вывод
+    # цепочки INPUT, FORWARD, OUTPUT
+sudo iptables -L -t filter -nv                                              # t - таблица filter
+    # тоже самое т.к. таблица filter по-умолчанию
+sudo iptables -A INPUT -p tcp --dport=22 -j ACCEPT                          # A - добавить правило в конец. открыть SSH
+sudo iptables -A INPUT -i lo -j ACCEPT                                      # разрешить loopback (localhost)
+sudo iptables -A INPUT -p icmp -j ACCEPT                                    # разрешить пинг
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT       # чтобы пакеты проходили обратно (для скачивания пакетов и т.д.)
+sudo iptables -P INPUT REJECT                                               # закрыть INPUT. На каждый пакет отвечаем пакетом о закрытии (не безопсно)
+sudo iptables -P INPUT DROP                                                 # закрыть INPUT. Удалить пакет, так как будто сервер не работает
+sudo iptables -I INPUT -s 123.654.876.98 -j DROP                            # I - добавить правило в начало. Закрыть IP
+sudo iptables -A INPUT -i eth0 -p tcp --dport 22 -j ACCEPT                  # Разрешить SSH только для интерфейса eth0
+sudo iptables-save > ./iptables.rules                                       # записать в файл правила
+
+sudo ss -ntlp                    # socket stat - все открытые порты tcp
+sudo ss -ntulp                   # дополнительно udp
+
+sudo iptables -L -t nat -nv                                                             # t - таблица nat
+    # цепочки PREROUTING, INPUT, OUTPUT, POSTROUTING
+
+### Редирект портов ###
+
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT                                      # разрешить 80
+sudo iptables -t mangle -A PREROUTING -p tcp --dport 8080 -j DROP                       # запретить прямое подключение к 8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080         # редирект с 80 на 8080 и обратно
+sudo iptables -A INPUT -p tcp --dport 8080 -j ACCEPT                                    # разрешить 8080 уже после редиректа
+
+######
+
+### Перенаправление порта DNAT
+
+sudo iptables -A INPUT -p tcp --dport 9022 -j ACCEPT                                    # разрешаем открыть порт 9022
+sudo iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT                                  # разрешить пересылку трафика из внутреннего enp0s8 интерфейса на enp0s3
+sudo iptables -t nat -A PREROUTING -p tcp --dport 9022 -j DNAT --to 192.168.56.6:22     # перенаправление порта 9022 на 22 (на входном DNAT сервере)
+
+######
+
+
+### Настройка выходного SNAT ###
+
+## На NAT instance ##
+ip -a                                                            # взять сетевые интерфейсы
+echo 1 > /proc/sys/net/ipv4/ip_forward                           # динамически включить forwarding пакетов (пересылку) (только до перезагрузки)
+vim /etc/sysctl.conf                                             # через файл включить forwarding пакетов (пересылку)
+>   net.ipv4.ip_forward=1
+
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE      # POSTROUTING - конец процесса, enp0s3 - выходной сетевой интерфейс, MASQUERADE - автоматический SNAT
+sudo iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT           # разрешить пересылку трафика из внутреннего enp0s8 интерфейса на enp0s3
+
+## На исходящей node ##
+ip r                                                             # проверяем gateways
+sudo ip route add default via 192.168.56.5 dev enp0s8            # 192.168.56.5 - IP SNAT из enp0s8
+ip r                                                             # проверяем gateways (должен добавится новый)
+
+######
