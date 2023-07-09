@@ -25,7 +25,7 @@
 - Ceph - сеть (min 10 Гб/с) интерфейсов хранилищ
 - CSI (Container Storage Interface) - унификация интерфейсов таких как Ceph, Portworx, NetApp и т.д. в k8s, docker swarm и т.д.
   - Общается с внешними компонентами через UNIX domain sockets с помощью gRPC
-- CNI (Container Networking Interface) - сетевой интерфейс и стандарт для Linux-контейнеров (Calico, Flunnel)
+- CNI (Container Networking Interface) - сетевой интерфейс и стандарт для Linux-контейнеров (Calico, Flannel)
 - NAT (Network Address Translation) - передача пакетов на границах разных сетей (преобразование IPs) (надстройка над NetFilter)
   - SNAT (Source NAT) - выход запроса наружу (меняется source IP)
   - DNAT (Destination NAT) - входящие запросы (меняется destination IP)
