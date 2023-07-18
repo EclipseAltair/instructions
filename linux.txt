@@ -21,6 +21,8 @@ free -g			# кол-во памяти
 ps [user]		# процессы [пользователя]
 ps aux			# процессы с данными
 ps aux | grep {pattern}	# процессы с данными, отсеять {pattern}
+# посмотреть сколько памяти потребляет процесс
+ps -eo size,pid,user,command --sort -size |     awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' |    cut -d "" -f2 | cut -d "-" -f1 | grep <pattern>
 
 df -h               # занятая память по дискам
 du -sh /home/*      # размер файлов в /home/*
