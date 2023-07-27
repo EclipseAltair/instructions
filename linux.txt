@@ -34,6 +34,9 @@ groupdel {group}		# удалить группу
 usermod -aG {group} {user}	# добавить пользователя в группу
 deluser {user} {group}		# удалить пользователя из группы
 
+cut -d: -f1 /etc/group      # посмотреть все группы
+cut -d: -f1 /etc/passwd     # посмотреть всех пользователей
+
 chown {user} {dir}		# изменить пользователя директории	
 chgrp {group} {dir}		# изменить группу директории	
 chmod o+x {dir}		    # others+execute
