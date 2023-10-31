@@ -1,0 +1,36 @@
+# staging заказ
+echo "GET https://123.frfrstaging.pw/api/v1/orders_order/7100422/
+    Cookie: csrftoken=
+    Cookie: sessionid=" | \
+vegeta attack -duration=3s -rate=10/3s | \
+vegeta report
+
+# rc заказ
+echo "GET https://123.farfor-rc.pw/api/v1/orders_order/27777088/
+    Cookie: csrftoken=
+    Cookie: sessionid=" | \
+vegeta attack -duration=3s -rate=10/3s | \
+vegeta report
+
+# prod заказ
+echo "GET https://123.farfor.pw/api/v1/orders_order/28936541/
+    Cookie: csrftoken=
+    Cookie: csrftoken=
+    Cookie: sessionid=" | \
+vegeta attack -duration=3s -rate=10/3s | \
+vegeta report
+
+# prod заказ loop back
+echo "GET http://farfor-erp-prod.farfor-erp.svc.cluster.local:8000/api/v1/orders_order/28936541/
+    Cookie: csrftoken=
+    Cookie: csrftoken=
+    Cookie: sessionid=" | \
+vegeta attack -duration=3s -rate=10/3s | \
+vegeta report
+
+# prod wserv3 (логгируется)
+echo "GET https://123.farfor.pw/api/wserv3/last_unfinished_order/
+    Cookie: csrftoken=
+    Cookie: sessionid=" | \
+vegeta attack -duration=3s -rate=10/3s | \
+vegeta report
