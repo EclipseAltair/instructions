@@ -40,6 +40,9 @@ ON c.id=p.customer_id GROUP BY c.name HAVING SUM(p.price)>0;	# где c.id=p.cus
 SELECT name FROM table1 UNION SELECT name FROM table2;		# объединяет таблицы, удаляя полностью совпадающие записи
 SELECT name FROM table1 UNION ALL SELECT name FROM table2;	# объединяет таблицы
 
+# Проверить кодировку поля "notes" таблицы "clients_address"
+SELECT character_set_name FROM information_schema.'COLUMNS' WHERE table_schema = "farfor" AND table_name = "clients_address" AND column_name "notes";
+
 INSERT INTO table (id, name, surname) VALUES (3, 'Jon', 'Jj');	# вставить запись в таблицу
 UPDATE table SET price=1000 WHERE id=1;				# установить значение price=1000, где id=1
 DELETE FROM table WHERE id=1;					# удалить запись в table с id=1
