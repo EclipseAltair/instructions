@@ -41,7 +41,10 @@ SELECT name FROM table1 UNION SELECT name FROM table2;		# объединяет �
 SELECT name FROM table1 UNION ALL SELECT name FROM table2;	# объединяет таблицы
 
 # Проверить кодировку поля "notes" таблицы "clients_address"
-SELECT character_set_name FROM information_schema.'COLUMNS' WHERE table_schema = "farfor" AND table_name = "clients_address" AND column_name "notes";
+SELECT character_set_name FROM information_schema.`COLUMNS` WHERE table_schema = "farfor" AND table_name = "clients_address" AND column_name = "notes";
+
+# Поменять тип кодировки у поля "task" таблицы "todomanager_todoitem"
+ALTER TABLE todomanager_todoitem CHANGE task task LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 
 INSERT INTO table (id, name, surname) VALUES (3, 'Jon', 'Jj');	# вставить запись в таблицу
 UPDATE table SET price=1000 WHERE id=1;				# установить значение price=1000, где id=1
