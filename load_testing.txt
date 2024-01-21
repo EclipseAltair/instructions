@@ -50,3 +50,7 @@ echo "GET http://notify.farfor.local:8000/swagger/schema/
     Cookie: sessionid=d008wilb29h359jxfyn73hem3kpayw3g" | \
 vegeta attack -duration=1s -rate=10/1s | \
 vegeta report
+
+echo "GET http://api.farfor.local:8002/v3/6faa1960-0f60-44c2-8e31-9918f2179c64/ufa/banners/" | \
+vegeta attack -duration=1s -rate=10/1s | \
+vegeta report
