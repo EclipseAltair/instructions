@@ -1,0 +1,2 @@
+sudo rabbitmq-server -version                                           # провроерить версию
+sudo rabbitmq-diagnostics status --node rabbit@rabbitmq-staging         # диагностика rabbitmq

@@ -1,11 +1,9 @@
-# staging заказ
 echo "GET https://123.frfrstaging.pw/api/v1/orders_order/7100422/
     Cookie: csrftoken=FtVRDKbHbvabroyMrDbxLIKX0zECtdr8mWfrQev7PmzgDBKUYBf1MpSEqsRi76bA
     Cookie: sessionid=d008wilb29h359jxfyn73hem3kpayw3g" | \
 vegeta attack -duration=3s -rate=10/3s | \
 vegeta report
 
-# staging заказ loop back
 echo "GET http://123.frfrstaging.pw:8000/api/v1/orders_order/7100369/?_dc=1698794499416&format=json&id=7100369
 Accept: */*
 Sec-Fetch-Site: same-origin
@@ -29,26 +27,27 @@ vegeta attack -duration=3s -rate=10/3s | \
 vegeta report
 
 # staging список заказов
-echo "GET https://123.frfrstaging.pw/api/v1/orders_order/7110682?_dc=1705869459285&format=json&id=7110682
-Accept: */*
+echo "GET http://123.farfor.pw/api/v1/geo_street/?format=json&_dc=1707402180117&page=1&offset=0&limit=25&filter=%5B%7B%22property%22%3A%22name%22%7D%5D
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
 Accept-Encoding: gzip, deflate, br
 Accept-Language: ru,en;q=0.9,bg;q=0.8
-Cookie: _ym_uid=1685871949589485232; _ym_d=1701692075; csrftoken=MrpTOEVFCB1xY5B1MPRMdz60TEFzhZBhjAz3mLLnU2WTAn57sMmWhYgukALyeB7l; sessionid=it1alf9o827eyrgorvc9m3wfs038gtnc
-Referer: https://123.frfrstaging.pw/
-Sec-Ch-Ua: "Chromium";v="118", "YaBrowser";v="23", "Not=A?Brand";v="99"
+Cache-Control: max-age=0
+Cookie: csrftoken=vtdGqFGJL113FzVVQjeFyYt21bmudHCwgYmEUUFU48wSaRAg6w3RV6RxvI9D5PZQ; sessionid=kslujwk6gz0uudndfx6m3r9gr7rc716p
+Sec-Ch-Ua: "Chromium";v="118", "YaBrowser";v="23.11", "Not=A?Brand";v="99", "Yowser";v="2.5"
 Sec-Ch-Ua-Mobile: ?0
 Sec-Ch-Ua-Platform: "Linux"
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: same-origin
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.675 YaBrowser/23.11.1.675 (beta) Yowser/2.5 Safari/537.36
-X-Requested-With: XMLHttpRequest"  | \
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 YaBrowser/23.11.0.0 Safari/537.36"  | \
 vegeta attack -duration=1s -rate=30/1s | \
 vegeta report
 
 # prod заказ
 echo "GET https://123.farfor.pw/api/v1/orders_order/28936541/
-    Cookie: sessionid=lzfgrfnqtt0ftce49iw50idb2zutchbu" | \
+    Cookie: sessionid=6v842vycdwgvsvqle6ebkzjgeuugg7y3" | \
 vegeta attack -duration=3s -rate=10/3s | \
 vegeta report
 
@@ -70,5 +69,22 @@ vegeta attack -duration=1s -rate=10/1s | \
 vegeta report
 
 echo "GET http://api.farfor.local:8002/v3/6faa1960-0f60-44c2-8e31-9918f2179c64/ufa/banners/" | \
+vegeta attack -duration=1s -rate=10/1s | \
+vegeta report
+
+echo "GET https://api.frfrstaging.ru/v3/6faa1960-0f60-44c2-8e31-9918f2179c64/ufa/detail/
+    Cookie: sessionid=w8fzgrq3wzh3ov1qcjr9lg4i8x3p0p5z
+    X-Debug-Mode: true" | \
+vegeta attack -duration=1s -rate=10/1s | \
+vegeta report
+
+echo "GET https://api.farfor.ru/v3/842b03f5-7db9-4850-9cb1-407f894abf5e/ufa/detail/
+    Cookie: sessionid=1tg8zc182a6yom9tqh4w9q46nnypogvm" | \
+vegeta attack -duration=1s -rate=10/1s | \
+vegeta report
+
+echo "GET https://api.frfrstaging.ru/v3/6faa1960-0f60-44c2-8e31-9918f2179c64/ufa/detail/
+    Cookie: sessionid=w8fzgrq3wzh3ov1qcjr9lg4i8x3p0p5z
+    X-Debug-Mode: true" | \
 vegeta attack -duration=1s -rate=10/1s | \
 vegeta report
