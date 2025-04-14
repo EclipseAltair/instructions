@@ -1,0 +1,17 @@
+# Установка ldapsearch на alpine
+apk update
+apk add openldap-clients
+
+# Посмотреть объекты с атрибутом uid в LLDAP
+ldapsearch -x -H ldap://lldap-farfor-erp-staging:3890 \
+    -D "uid=admin,ou=people,dc=sso-farfor-erp-lldap,dc=frfrstaging,dc=pw" \
+    -w '<password>' \
+    -b "ou=people,dc=sso-farfor-erp-lldap,dc=frfrstaging,dc=pw" \
+    "(uid=*)"
+
+# Посмотреть объекты с любыми классами объектов в LLDAP
+ldapsearch -x -H ldap://lldap-farfor-erp-staging:3890 \
+    -D "uid=admin,ou=people,dc=sso-farfor-erp-lldap,dc=frfrstaging,dc=pw" \
+    -w '<password>' \
+    -b "ou=people,dc=sso-farfor-erp-lldap,dc=frfrstaging,dc=pw" \
+    "(objectClass=*)"
