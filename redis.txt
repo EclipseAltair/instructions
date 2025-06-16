@@ -1,0 +1,7 @@
+redis-cli -h 10.110.0.51 -p 6379               # Подключиться к redis с host 10.110.0.51 и port 6379
+
+INFO keyspace                                   # Посмотреть DBs и сколько в них данных
+SELECT 11                                       # Выбрать DB 11
+KEYS *                                          # Вывести все ключи в выбранной DB
+GET "erp_login:ip:None:int"                     # Посмотреть значения записи
+DEL erp_login:ip:None:int                       # Удалить запись
