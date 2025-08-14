@@ -1,0 +1,21 @@
+### master
+
+# Применить настройки Security Plugin
+/usr/share/opensearch/plugins/opensearch-security/tools/securityadmin.sh \
+  -cd /usr/share/opensearch/config/opensearch-security \
+  -icl \
+  -nhnv \
+  -cacert /usr/share/opensearch/config/admin/ca.crt \
+  -cert /usr/share/opensearch/config/admin/tls.crt \
+  -key /usr/share/opensearch/config/admin/tls.key
+
+# Установить всем кол-во реплик 0
+curl -X PUT "https://localhost:9200/_all/_settings" \
+  --cert /usr/share/opensearch/config/admin/tls.crt \
+  --key /usr/share/opensearch/config/admin/tls.key \
+  --cacert /usr/share/opensearch/config/admin/ca.crt \
+  -H "Content-Type: application/json" \
+  -d '{"index": {"number_of_replicas": 0}}'
+
+
+### dashboards
