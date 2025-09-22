@@ -18,4 +18,12 @@ curl -X PUT "https://localhost:9200/_all/_settings" \
   -d '{"index": {"number_of_replicas": 0}}'
 
 
-### dashboards
+### visualize
+
+# Обрезка первых 11 символов в визуализации OpenSearch для Variti вердиктов
+{
+  "script": {
+    "source": "doc['message.keyword'].value.substring(11)",
+    "lang": "painless"
+  }
+}

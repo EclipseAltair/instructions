@@ -79,7 +79,7 @@ vegeta attack -duration=1s -rate=10/1s | \
 vegeta report
 
 echo "GET https://api.farfor.ru/v3/842b03f5-7db9-4850-9cb1-407f894abf5e/ufa/detail/
-    Cookie: sessionid=1tg8zc182a6yom9tqh4w9q46nnypogvm" | \
+    Cookie: sessionid=f6rr7jl1gp51h6jdo4vnk7wad4r3f3ln" | \
 vegeta attack -duration=1s -rate=10/1s | \
 vegeta report
 
@@ -87,4 +87,8 @@ echo "GET https://api.frfrstaging.ru/v3/6faa1960-0f60-44c2-8e31-9918f2179c64/ufa
     Cookie: sessionid=w8fzgrq3wzh3ov1qcjr9lg4i8x3p0p5z
     X-Debug-Mode: true" | \
 vegeta attack -duration=1s -rate=10/1s | \
+vegeta report
+
+echo "GET https://api.rztstaging.ru/docs" | \
+vegeta attack -duration=120s -rate=10/1s | \
 vegeta report
