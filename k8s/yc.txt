@@ -4,3 +4,5 @@ yc config profile activate foo                                          # пер
 yc managed-kubernetes cluster get-credentials foo --external  --force   # переключить контекст на кластер foo
 
 yc container registry create --name foo             # создать реестр foo в Container Registry
+
+yc k8s cluster update <cluster_id> --master-logging enabled=true,log-group-id=<cloud_logging_group_id>,cluster-autoscaler-enabled=true,kube-apiserver-enabled=true  # Включить логи на master node k8s
