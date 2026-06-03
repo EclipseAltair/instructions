@@ -1,3 +1,7 @@
+_cat/indices?pretty&v&s=index       # вывести все индексы в алфавитном порядке
+_cat/indices?v&s=docs.count:desc    # вывести все индексы в порядке убывания количества записей
+_cat/indices?v&s=store.size:desc    # вывести все индексы в порядке убывания размеров индекса
+
 ### master
 
 # Применить настройки Security Plugin
